@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="translate_text_btn">Translate</string>
+    <string name="text_to_translate_field">Text to translate</string>
+    <string name="translation_hint">Translation</string>
+    <string name="language_text">Language</string>
+    <string name="country_image_list">country image</string>
+</resources>

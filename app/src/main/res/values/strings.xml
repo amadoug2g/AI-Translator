@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">DeepL Translator</string>
+    <string name="translate_text_btn">Translate</string>
+    <string name="text_to_translate_field">Text to translate</string>
+    <string name="translation_hint">Translation</string>
+    <string name="language_text">Language</string>
+    <string name="country_image_list">country image</string>
+
+    <string-array name="source_lang">
+        <item>Any language</item>
+        <item>DE</item>
+        <item>EN</item>
+        <item>ES</item>
+        <item>FR</item>
+        <item>IT</item>
+        <item>PT</item>
+        <item>NL</item>
+        <item>RU</item>
+    </string-array>
+
+    <string-array name="target_lang">
+        <item>DE</item>
+        <item>EN-GB</item>
+        <item>EN-US</item>
+        <item>ES</item>
+        <item>FR</item>
+        <item>IT</item>
+        <item>PT</item>
+        <item>NL</item>
+        <item>RU</item>
+    </string-array>
 </resources>

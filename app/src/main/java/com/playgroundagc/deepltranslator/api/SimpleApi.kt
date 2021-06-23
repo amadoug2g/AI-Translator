@@ -1,6 +1,7 @@
 package com.playgroundagc.deepltranslator.api
 
 import com.playgroundagc.deepltranslator.model.Translations
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -13,7 +14,7 @@ import retrofit2.http.Query
 
 interface SimpleApi {
 
-    @POST("v2/translate")
+    @GET("v2/translate")
     suspend fun translateText(
             @Query("auth_key") AUTH_KEY: String,
             @Query("text") text: String,
