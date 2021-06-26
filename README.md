@@ -11,7 +11,7 @@ A mobile translation application project.
 ## Installation & Setup
 ### 1. Install dependencies / Clone Project
 ```
-git clone https://github.com/amadoug2g/MovieLibrary
+git clone https://github.com/amadoug2g/DeepLTranslator
 ```
 ### 2. Get your API key
 You can get your DeepL API key by creating an account on their [website](https://www.deepl.com/pro/change-plan?cta=header-prices/#developer).
