@@ -8,14 +8,12 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.playgroundagc.deepltranslator.R
-import com.playgroundagc.deepltranslator.model.SourceLang
 import com.playgroundagc.deepltranslator.model.TargetLang
-import timber.log.Timber
 
 /**
  * Created by Amadou on 23/06/2021, 16:55
  *
- * TODO: File Description
+ * Language Target Spinner Adapter
  *
  */
 
@@ -39,9 +37,7 @@ class CountryTargetAdapter(context: Context, var countryList: Array<TargetLang>)
 
         item.countryName.text = country.language
 
-//        Timber.i("Lang? ${country.language}")
-
-        item.countryImage.setImageResource(R.drawable.ic_account)
+        item.countryImage.setImageResource(country.imageCategory)
 
         return view
     }

@@ -10,6 +10,6 @@ package com.playgroundagc.deepltranslator.model
 
 data class TranslationText(
         var text: String,
-        var source_lang: String? = null,
+        var source_lang: String,
         var target_lang: String
 )

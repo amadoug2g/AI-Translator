@@ -13,7 +13,7 @@ import com.playgroundagc.deepltranslator.model.SourceLang
 /**
  * Created by Amadou on 23/06/2021, 16:46
  *
- * TODO: File Description
+ * Language Source Spinner Adapter
  *
  */
 
@@ -27,6 +27,7 @@ class CountrySourceAdapter(context: Context, var countryList: Array<SourceLang>)
         val view: View
         val item: ItemHolder
         val country = countryList[position]
+
         if (convertView == null) {
             view = inflater.inflate(R.layout.simple_layout_file, parent, false)
             item = ItemHolder(view)
@@ -38,23 +39,9 @@ class CountrySourceAdapter(context: Context, var countryList: Array<SourceLang>)
 
         item.countryName.text = country.language
 
-        item.countryImage.setImageResource(R.drawable.ic_account)
-
-//        item.clubAddress.text = country.address
-
-//        try {
-//            GlideApp.with(view).apply {
-//                load(AffiliationRequestService.getImageReference(club.logo))
-//                    .placeholder(R.drawable.ic_account)
-//                    .centerCrop()
-//                    .into(item.clubImage)
-//            }
-//        } catch (e: Exception) {
-//            Log.e("ClubDropDownAdapter", "Image could not load: $e")
-//        }
+        item.countryImage.setImageResource(country.imageCategory)
 
         return view
-
     }
 
     override fun getItem(position: Int): Any {

@@ -3,9 +3,7 @@ package com.playgroundagc.deepltranslator
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.playgroundagc.deepltranslator.databinding.ActivityMainBinding
@@ -47,26 +45,10 @@ class MainActivity : AppCompatActivity() {
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
-//        binding.sourceLangSpinner.adapter =
-//            ArrayAdapter(applicationContext, R.layout.simple_layout_file, SourceLang.values())
-//
-//        binding.targetLangSpinner.adapter =
-//            ArrayAdapter(applicationContext, R.layout.simple_layout_file, TargetLang.values())
-//
-//        val sourceList = SourceLang.values()
-//        val targetList = TargetLang.values()
-//
-//        val sourceCountryLang = CountrySourceAdapter(applicationContext, SourceLang.values())
-//        val sourceTargetLang = CountryTargetAdapter(applicationContext, TargetLang.values())
-//
-//        binding.sourceLangSpinner.adapter = sourceCountryLang
         binding.sourceLangSpinner.adapter =
             CountrySourceAdapter(applicationContext, SourceLang.values())
         binding.targetLangSpinner.adapter =
             CountryTargetAdapter(applicationContext, TargetLang.values())
-
-//        binding.sourceLangSpinner.setSelection(0)
-//        binding.targetLangSpinner.setSelection(0)
 
         binding.textRaw.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
@@ -96,9 +78,9 @@ class MainActivity : AppCompatActivity() {
         val sourceLang = binding.sourceLangSpinner.selectedItem as SourceLang
         val targetLang = binding.targetLangSpinner.selectedItem as TargetLang
 
-        Timber.i("Text ? $translationText")
-        Timber.i("Source ? $sourceLang")
-        Timber.i("Target ? $targetLang")
+//        Timber.i("Text ? $translationText")
+//        Timber.i("Source ? $sourceLang")
+//        Timber.i("Target ? $targetLang")
 
         try {
             if (sourceLang.language == SourceLang.AUTO.language) {
@@ -112,10 +94,19 @@ class MainActivity : AppCompatActivity() {
                 )
             } else {
                 Timber.i("NOT AUTO")
+
+//                Timber.i("Text ? $translationText")
+//                Timber.i("Source ? $sourceLang")
+//                Timber.i("Target ? $targetLang")
+//
+//                Timber.i("Text ? $translationText")
+//                Timber.i("Source Lang ? ${SourceLang[sourceLang.language]}")
+//                Timber.i("Target Lang ? ${TargetLang[targetLang.language]}")
+
                 viewModel.getTranslation(
                     TranslationText(
                         "$translationText",
-                        SourceLang[sourceLang.language],
+                        SourceLang[sourceLang.language]!!,
                         TargetLang[targetLang.language]!!
                     )
                 )
