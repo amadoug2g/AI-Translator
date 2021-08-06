@@ -1,4 +1,4 @@
-package com.playgroundagc.deepltranslator.viewmodel
+package com.playgroundagc.deepltranslator.app.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.playgroundagc.deepltranslator.R
-import com.playgroundagc.deepltranslator.model.SourceLang
+import com.playgroundagc.deepltranslator.domain.SourceLang
 
 /**
  * Created by Amadou on 23/06/2021, 16:46

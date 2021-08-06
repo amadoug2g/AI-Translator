@@ -1,23 +1,22 @@
-package com.playgroundagc.deepltranslator.api
+package com.playgroundagc.deepltranslator.data
 
-import com.playgroundagc.deepltranslator.model.Translations
+import com.playgroundagc.deepltranslator.domain.Translations
+import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Query
 
 /**
  * Created by Amadou on 20/06/2021, 19:19
  *
- * Api Interface
+ * Remote Data Source Interface
  *
  */
 
-interface SimpleApi {
-
+interface RemoteDataSource {
     @GET("v2/translate")
     suspend fun translateText(
             @Query("auth_key") AUTH_KEY: String,
             @Query("text") text: String,
             @Query("target_lang") target_lang: String
-    ): Translations
+    ): Response<Translations>
 }

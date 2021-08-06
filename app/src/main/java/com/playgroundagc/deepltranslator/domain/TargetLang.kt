@@ -1,21 +1,22 @@
-package com.playgroundagc.deepltranslator.model
+package com.playgroundagc.deepltranslator.domain
 
 import com.playgroundagc.deepltranslator.R
 
 /**
- * Created by Amadou on 23/06/2021, 14:45
+ * Created by Amadou on 23/06/2021, 14:48
  *
- * Source Language List
+ * Target Language List
  *
  */
 
-enum class SourceLang(val language: String) {
-    AUTO("Any language"),
+enum class TargetLang(val language: String) {
     BG("Bulgarian"),
     CS("Czech"),
     DA("Danish"),
     DE("German"),
     EL("Greek"),
+    EN_GB("English (British)"),
+    EN_US("English (American)"),
     EN("English"),
     ES("Spanish"),
     ET("Estonian"),
@@ -28,7 +29,8 @@ enum class SourceLang(val language: String) {
     LV("Latvian"),
     NL("Dutch"),
     PL("Polish"),
-    PT("Portuguese"),
+    PT_PT("Portuguese"),
+    PT_BR("Portuguese (Brazil)"),
     RO("Romanian"),
     RU("Russian"),
     SK("Slovak"),
@@ -50,6 +52,8 @@ enum class SourceLang(val language: String) {
                 "German" -> result = R.drawable.german
                 "Greek" -> result = R.drawable.greek
                 "English" -> result = R.drawable.english_british
+                "English (British)" -> result = R.drawable.english_british
+                "English (American)" -> result = R.drawable.english_american
                 "Spanish" -> result = R.drawable.spanish
                 "Estonian" -> result = R.drawable.estonian
                 "Finnish" -> result = R.drawable.finnish
@@ -62,6 +66,7 @@ enum class SourceLang(val language: String) {
                 "Dutch" -> result = R.drawable.dutch
                 "Polish" -> result = R.drawable.polish
                 "Portuguese" -> result = R.drawable.portuguese
+                "Portuguese (Brazil)" -> result = R.drawable.portuguese_brazil
                 "Romanian" -> result = R.drawable.romanian
                 "Russian" -> result = R.drawable.russian
                 "Slovak" -> result = R.drawable.slovak
@@ -73,7 +78,7 @@ enum class SourceLang(val language: String) {
         }
 
     companion object {
-        private val value = values().associateBy(SourceLang::language)
+        private val value = values().associateBy(TargetLang::language)
         operator fun get(source: String) = value[source]?.name
     }
 }

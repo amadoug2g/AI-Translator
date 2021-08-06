@@ -1,4 +1,4 @@
-package com.playgroundagc.deepltranslator.model
+package com.playgroundagc.deepltranslator.domain
 
 /**
  * Created by Amadou on 20/06/2021, 23:26

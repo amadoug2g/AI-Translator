@@ -1,4 +1,4 @@
-package com.playgroundagc.deepltranslator.model
+package com.playgroundagc.deepltranslator.domain
 
 import com.google.gson.annotations.SerializedName
 

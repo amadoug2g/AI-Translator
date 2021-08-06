@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_deep_l_logo_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.DeepLTranslator">
-        <activity android:name=".MainActivity">
+        <activity android:name=".app.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,17 +1,14 @@
-package com.playgroundagc.deepltranslator.api
+package com.playgroundagc.deepltranslator.app.framework
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import com.playgroundagc.deepltranslator.data.RemoteDataSource
 import com.playgroundagc.deepltranslator.util.Constants.BASE_URL
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by Amadou on 20/06/2021, 19:31
  *
- * Retrofit Instance
- * : retrofit initialization file
+ * Retrofit Instance initialization
  *
  */
 
@@ -23,7 +20,7 @@ object RetrofitInstance {
                 .build()
     }
 
-    val api: SimpleApi by lazy {
-        retrofit.create(SimpleApi::class.java)
+    val DeepLService: RemoteDataSource by lazy {
+        retrofit.create(RemoteDataSource::class.java)
     }
 }
