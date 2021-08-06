@@ -1,4 +1,4 @@
-# DeepLTranslator
+# AI Translator
 Translation Application using Kotlin &amp; the DeepL API
 
 ## Introduction
