@@ -1,5 +1,6 @@
 package com.playgroundagc.deepltranslator.app.ui
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -21,10 +22,9 @@ import com.playgroundagc.deepltranslator.databinding.ActivityMainBinding
 import com.playgroundagc.deepltranslator.domain.Response
 import com.playgroundagc.deepltranslator.domain.SourceLang
 import com.playgroundagc.deepltranslator.domain.TargetLang
-import com.playgroundagc.deepltranslator.domain.TranslationText
+import com.playgroundagc.deepltranslator.extension.setVisible
 import com.playgroundagc.deepltranslator.usecases.TranslateTextUseCase
 import timber.log.Timber
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,56 +38,66 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
 
+        setupViews()
         initTimber()
-
         initViewModel()
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        binding.clearButton.background = null
-
-        binding.apply {
-            lifecycleOwner = this@MainActivity
-            executePendingBindings()
-        }
-
-        viewModel.errorMessage.observe(this, {
-            if (it.isNotEmpty()) showError()
-        })
-
-        viewModel.translations.observe(this, { response ->
-            getDetectedLanguage(response.translations[0])
-
-            try {
-                val result = response.translations[0].text
-                displayTranslation(result)
-            } catch (e: Exception) {
-                showError(e.localizedMessage)
-            }
-        })
-
-        binding.clearButton.setOnClickListener {
-            binding.textRaw.text.clear()
-        }
-
-        if (binding.textRaw.text.isEmpty() && binding.sourceLangSpinner.selectedItemPosition == 0) {
-            binding.detectedSourceLanguage.visibility = View.GONE
-        } else {
-            binding.detectedSourceLanguage.visibility = View.VISIBLE
-        }
-
-        if (binding.textRaw.text.isEmpty()) {
-            binding.clearButton.visibility = View.GONE
-        } else {
-            binding.clearButton.visibility = View.VISIBLE
-        }
-
         setupSpinners()
         setupListeners()
+        setupObservers()
     }
     //endregion
 
     //region Translation
+    private fun translateText() {
+        if (binding.textRaw.text.isNotEmpty()) {
+            val translationText = binding.textRaw.text
+            val sourceLang = binding.sourceLangSpinner.selectedItem as SourceLang
+            val targetLang = binding.targetLangSpinner.selectedItem as TargetLang
+
+            checkDetectedLanguage()
+
+            viewModel.formatTranslation("$translationText", sourceLang, targetLang)
+        }
+    }
+
+    /**
+     * Detected Source Language Visibility
+     * */
+    private fun checkDetectedLanguage() {
+        if (binding.textRaw.text.isNotEmpty() || binding.sourceLangSpinner.selectedItemPosition == 0) binding.detectedSourceLanguage.setVisible(
+            true
+        )
+        if (binding.textRaw.text.isEmpty() || binding.sourceLangSpinner.selectedItemPosition != 0) binding.detectedSourceLanguage.setVisible(
+            false
+        )
+    }
+
+    private fun displayTranslation(translation: String?) {
+        binding.textTranslated.text = translation
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun getDetectedLanguage(response: Response) {
+        val detectedLang = response.detected_source_language?.let { SourceLang.valueOf(it) }
+        val lang = (detectedLang ?: "${response.detected_source_language}").toString()
+        binding.detectedSourceLanguage.text = "Detected language: $lang"
+    }
+    //endregion
+
+    //region Setups
+    private fun setupViews() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.apply {
+            lifecycleOwner = this@MainActivity
+            executePendingBindings()
+        }
+        binding.clearButton.background = null
+
+        binding.detectedSourceLanguage.setVisible(false)
+
+        binding.clearButton.setVisible(false)
+    }
+
     private fun setupSpinners() {
         binding.sourceLangSpinner.adapter =
             CountrySourceAdapter(applicationContext, SourceLang.values())
@@ -115,123 +125,47 @@ class MainActivity : AppCompatActivity() {
             }
 
         binding.textRaw.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {
-//                loadingStop()
-            }
+            override fun afterTextChanged(s: Editable) {}
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
+            /**
+             * Clear Text Button Visibility
+             * */
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                /**
-                 * Detected Source Language Visibility
-                 * */
-
-                binding.detectedSourceLanguage.visibility =
-                    if (binding.textRaw.text.isNotEmpty() && binding.sourceLangSpinner.selectedItemPosition == 0) View.VISIBLE else View.GONE
-
-
-                /**
-                 * Clear Text Button Visibility
-                 * */
-                binding.clearButton.visibility =
-                    if (binding.textRaw.text.isNotEmpty()) View.VISIBLE else View.GONE
+                if (s.isEmpty()) binding.clearButton.setVisible(false) else binding.clearButton.setVisible(
+                    true
+                )
 
                 translateText()
             }
         })
 
-        binding.deleteBtn.setOnClickListener {
+        binding.clearButton.setOnClickListener {
             binding.textRaw.text.clear()
+            checkDetectedLanguage()
         }
     }
 
-    private fun translateText() {
-        if (binding.textRaw.text.isNotEmpty()) {
-//            loadingStart()
-            val translationText = binding.textRaw.text
-            val sourceLang = binding.sourceLangSpinner.selectedItem as SourceLang
-            val targetLang = binding.targetLangSpinner.selectedItem as TargetLang
+    private fun setupObservers() {
+        viewModel.errorMessage.observe(this, {
+            if (it.isNotEmpty()) showError()
+        })
 
-//            viewModel.queryTranslation(TranslationText("$translationText", SourceLang[sourceLang.language]!!, TargetLang[targetLang.language]!!))
+        viewModel.translations.observe(this, { response ->
+            getDetectedLanguage(response.translations[0])
 
             try {
-                when (sourceLang.language) {
-                    SourceLang.AUTO.language -> {
-                        when (targetLang.language) {
-                            TargetLang.EN_GB.language -> {
-                                viewModel.queryTranslation(
-                                    TranslationText(
-                                        "$translationText",
-                                        SourceLang[sourceLang.language]!!,
-                                        "EN-GB"
-                                    )
-                                )
-                            }
-                            TargetLang.EN_US.language -> {
-                                viewModel.queryTranslation(
-                                    TranslationText(
-                                        "$translationText",
-                                        SourceLang[sourceLang.language]!!,
-                                        "EN-US"
-                                    )
-                                )
-                            }
-                            else -> {
-                                viewModel.queryTranslation(
-                                    TranslationText(
-                                        "$translationText",
-                                        "",
-                                        TargetLang[targetLang.language]!!
-                                    )
-                                )
-                            }
-                        }
-                    }
-                    else -> {
-                        when (targetLang.language) {
-                            TargetLang.EN_GB.language -> {
-                                viewModel.queryTranslation(
-                                    TranslationText(
-                                        "$translationText",
-                                        SourceLang[sourceLang.language]!!,
-                                        "EN-GB"
-                                    )
-                                )
-                            }
-                            TargetLang.EN_US.language -> {
-                                viewModel.queryTranslation(
-                                    TranslationText(
-                                        "$translationText",
-                                        SourceLang[sourceLang.language]!!,
-                                        "EN-US"
-                                    )
-                                )
-                            }
-                        }
-                    }
-                }
+                val result = response.translations[0].text
+                displayTranslation(result)
             } catch (e: Exception) {
                 showError(e.localizedMessage)
             }
+        })
 
-//            loadingStop()
-        }
-    }
-
-    private fun displayTranslation(translation: String?) {
-        try {
-            binding.textTranslated.text = translation
-        } catch (e: Exception) {
-            showError(e.localizedMessage)
-//            binding.textTranslated.text = error
-        }
-    }
-
-    private fun getDetectedLanguage(response: Response) {
-        val detectedLang = response.detected_source_language?.let { SourceLang.valueOf(it) }
-        binding.detectedSourceLanguage.text =
-            (detectedLang ?: "${response.detected_source_language}").toString()
+        viewModel.loadingState.observe(this, { state ->
+            if (state) progressBarLoadingStart() else progressBarLoadingStop()
+        })
     }
     //endregion
 
@@ -254,26 +188,25 @@ class MainActivity : AppCompatActivity() {
     //endregion
 
     //region View Methods
-    private fun loadingStart() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
-
-    private fun loadingStop() {
-        binding.progressBar.visibility = View.GONE
-    }
-
     private fun showError(message: String? = "") {
+        binding.detectedSourceLanguage.setVisible(true)
+
         Snackbar.make(
             binding.textRaw,
             if (!message.isNullOrEmpty()) message else viewModel.errorMessage.value.toString(),
             Snackbar.LENGTH_LONG
         )
-//            .setAction("Understood") {
-//                viewModel.errorMessage.value
-//            }
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.CYAN)
             .show()
+    }
+
+    private fun progressBarLoadingStart() {
+        binding.progressBar.setVisible(true)
+    }
+
+    private fun progressBarLoadingStop() {
+        binding.progressBar.setVisible(false)
     }
     //endregion
 }
