@@ -34,6 +34,12 @@ class MainViewModel(private val translateTextUseCase: TranslateTextUseCase) : Vi
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
+
+    private val _lastUsedSourceLang = MutableLiveData<Int>()
+    val lastUsedSourceLang: LiveData<Int> = _lastUsedSourceLang
+
+    private val _lastUsedTargetLang = MutableLiveData<Int>()
+    val lastUsedTargetLang: LiveData<Int> = _lastUsedTargetLang
     //endregion
 
     //region Functions
@@ -200,6 +206,14 @@ class MainViewModel(private val translateTextUseCase: TranslateTextUseCase) : Vi
         } catch (e: TimeoutException) {
         }
         return internetAddress != null && !internetAddress.equals("")
+    }
+
+    fun addSourceLang(position: Int) {
+        _lastUsedSourceLang.postValue(position)
+    }
+
+    fun addTargetLang(position: Int) {
+        _lastUsedTargetLang.postValue(position)
     }
     //endregion
 }

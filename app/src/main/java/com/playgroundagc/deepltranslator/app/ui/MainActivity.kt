@@ -26,6 +26,8 @@ import com.playgroundagc.deepltranslator.extension.setVisible
 import com.playgroundagc.deepltranslator.usecases.TranslateTextUseCase
 import timber.log.Timber
 
+private const val PREFS_NAME = "languageCheck"
+
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -44,6 +46,18 @@ class MainActivity : AppCompatActivity() {
         setupSpinners()
         setupListeners()
         setupObservers()
+
+        restoreLanguages()
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        saveSourceLanguage()
+        saveTargetLanguage()
     }
     //endregion
 
@@ -110,6 +124,8 @@ class MainActivity : AppCompatActivity() {
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     translateText()
+
+                    viewModel.addSourceLang(p2)
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -119,6 +135,8 @@ class MainActivity : AppCompatActivity() {
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     translateText()
+
+                    viewModel.addTargetLang(p2)
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -166,6 +184,32 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadingState.observe(this, { state ->
             if (state) progressBarLoadingStart() else progressBarLoadingStop()
         })
+    }
+    //endregion
+
+    //region Spinner Language
+    private fun saveSourceLanguage() {
+        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putInt("lastSource", viewModel.lastUsedSourceLang.value ?: 0)
+        editor.apply()
+    }
+
+    private fun saveTargetLanguage() {
+        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putInt("lastTarget", viewModel.lastUsedTargetLang.value ?: 0)
+        editor.apply()
+    }
+
+    private fun restoreLanguages() {
+        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+
+        val sourceLang = prefs.getInt("lastSource", viewModel.lastUsedSourceLang.value ?: binding.sourceLangSpinner.selectedItemPosition)
+        val targetLang = prefs.getInt("lastTarget", viewModel.lastUsedTargetLang.value ?: binding.targetLangSpinner.selectedItemPosition)
+
+        binding.sourceLangSpinner.setSelection(sourceLang)
+        binding.targetLangSpinner.setSelection(targetLang)
     }
     //endregion
 
