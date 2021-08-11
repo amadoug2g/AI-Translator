@@ -21,7 +21,7 @@ You can get your DeepL API key by creating an account on their [website](https:/
 Using a Virtual or Physical device
 
 ## What's next
-- [ ] Display loading before/during translation
+- [x] Display loading before/during translation
 - [ ] Track API data usage
 - [ ] Save last (most) used languages (source & target)
 - [ ] Store translation history with Android Room
