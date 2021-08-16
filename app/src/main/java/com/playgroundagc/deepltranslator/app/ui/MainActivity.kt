@@ -68,22 +68,21 @@ class MainActivity : AppCompatActivity() {
             val sourceLang = binding.sourceLangSpinner.selectedItem as SourceLang
             val targetLang = binding.targetLangSpinner.selectedItem as TargetLang
 
-            checkDetectedLanguage()
+            checkRawInput()
 
             viewModel.formatTranslation("$translationText", sourceLang, targetLang)
         }
     }
 
     /**
-     * Detected Source Language Visibility
+     * Detected Source Language & Clear Text Visibility
      * */
-    private fun checkDetectedLanguage() {
-        if (binding.textRaw.text.isNotEmpty() || binding.sourceLangSpinner.selectedItemPosition == 0) binding.detectedSourceLanguage.setVisible(
-            true
-        )
-        if (binding.textRaw.text.isEmpty() || binding.sourceLangSpinner.selectedItemPosition != 0) binding.detectedSourceLanguage.setVisible(
-            false
-        )
+    private fun checkRawInput() {
+        if (binding.textRaw.text.isNotEmpty() || binding.sourceLangSpinner.selectedItemPosition == 0) binding.detectedSourceLanguage.setVisible(true)
+
+        if (binding.textRaw.text.isEmpty() || binding.sourceLangSpinner.selectedItemPosition != 0) binding.detectedSourceLanguage.setVisible(false)
+
+        if (binding.textRaw.text.isEmpty()) binding.clearButton.setVisible(false) else binding.clearButton.setVisible(true)
     }
 
     private fun displayTranslation(translation: String?) {
@@ -147,13 +146,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
-            /**
-             * Clear Text Button Visibility
-             * */
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.isEmpty()) binding.clearButton.setVisible(false) else binding.clearButton.setVisible(
-                    true
-                )
+                checkRawInput()
 
                 translateText()
             }
@@ -161,7 +155,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.clearButton.setOnClickListener {
             binding.textRaw.text.clear()
-            checkDetectedLanguage()
+            checkRawInput()
         }
     }
 

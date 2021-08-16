@@ -131,7 +131,7 @@
                         android:indeterminateTint="@color/app_theme" />
 
                     <TextView
-                        android:id="@+id/mapProgressBarText"
+                        android:id="@+id/progressBarText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
