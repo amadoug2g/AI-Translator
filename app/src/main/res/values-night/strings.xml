@@ -9,4 +9,5 @@
     <string name="loading">Loading...</string>
     <string name="cancel_button_txt">cancel button</string>
     <string name="delete_text_btn">Clear</string>
+    <string name="switch_button_txt">Switch languages</string>
 </resources>

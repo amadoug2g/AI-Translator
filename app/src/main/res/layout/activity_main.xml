@@ -90,16 +90,38 @@
                     android:padding="8dp" />
             </com.google.android.material.card.MaterialCardView>
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/target_lang_spinner"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:spinnerMode="dialog"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                android:entries="@array/target_lang" />
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/target_lang_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="48dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_centerVertical="true"
+                    android:entries="@array/target_lang" />
+
+                <ImageButton
+                    android:id="@+id/switch_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="end"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/switch_button_txt"
+                    android:src="@drawable/ic_change_circle" />
+
+            </RelativeLayout>
+
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

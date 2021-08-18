@@ -11,32 +11,32 @@ import com.playgroundagc.deepltranslator.R
 
 enum class TargetLang(val language: String) {
     BG("Bulgarian"),
+    ZH("Chinese"),
     CS("Czech"),
     DA("Danish"),
-    DE("German"),
-    EL("Greek"),
-    EN_GB("English (British)"),
-    EN_US("English (American)"),
+    NL("Dutch"),
     EN("English"),
-    ES("Spanish"),
-    ET("Estonian"),
+    EN_US("English (American)"),
+    EN_GB("English (British)"),
+    ET("Estonian"), //8
     FI("Finnish"),
     FR("French"),
+    DE("German"),
+    EL("Greek"),
     HU("Hungarian"),
     IT("Italian"),
     JA("Japanese"),
-    LT("Lithuanian"),
     LV("Latvian"),
-    NL("Dutch"),
+    LT("Lithuanian"),
     PL("Polish"),
-    PT_PT("Portuguese"),
+    PT_PT("Portuguese"), //19
     PT_BR("Portuguese (Brazil)"),
     RO("Romanian"),
     RU("Russian"),
     SK("Slovak"),
     SL("Slovenian"),
-    SV("Swedish"),
-    ZH("Chinese");
+    ES("Spanish"),
+    SV("Swedish");
 
     override fun toString() : String {
         return language

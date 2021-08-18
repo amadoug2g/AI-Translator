@@ -12,29 +12,29 @@ import com.playgroundagc.deepltranslator.R
 enum class SourceLang(val language: String) {
     AUTO("Any language"),
     BG("Bulgarian"),
+    ZH("Chinese"),
     CS("Czech"),
     DA("Danish"),
-    DE("German"),
-    EL("Greek"),
+    NL("Dutch"),
     EN("English"),
-    ES("Spanish"),
     ET("Estonian"),
     FI("Finnish"),
     FR("French"),
+    DE("German"),
+    EL("Greek"),
     HU("Hungarian"),
     IT("Italian"),
     JA("Japanese"),
-    LT("Lithuanian"),
     LV("Latvian"),
-    NL("Dutch"),
+    LT("Lithuanian"),
     PL("Polish"),
     PT("Portuguese"),
     RO("Romanian"),
     RU("Russian"),
     SK("Slovak"),
     SL("Slovenian"),
-    SV("Swedish"),
-    ZH("Chinese");
+    ES("Spanish"),
+    SV("Swedish");
 
     override fun toString() : String {
         return language
