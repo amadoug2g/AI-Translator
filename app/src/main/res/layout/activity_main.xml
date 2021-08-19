@@ -28,17 +28,32 @@
             android:orientation="vertical"
             tools:context=".app.ui.MainActivity">
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/source_lang_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                android:entries="@array/source_lang"
-                android:padding="4dp"
-                android:spinnerMode="dialog" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_centerVertical="true"
+                    android:text="@string/from_text_spinner"/>
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/source_lang_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="16dp"
+                    android:entries="@array/source_lang"
+                    android:layout_centerVertical="true"
+                    android:padding="4dp"
+                    android:spinnerMode="dialog" />
+            </RelativeLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/detected_source_language"
@@ -50,30 +65,30 @@
                 android:layout_marginBottom="16dp"
                 android:gravity="start|top"
                 android:inputType="text"
-                android:visibility="gone"
                 android:minHeight="50dp"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:visibility="gone" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:cardElevation="8dp"
-                android:background="@drawable/text_field_border">
+                android:background="@drawable/text_field_border"
+                app:cardElevation="8dp">
 
-                    <ImageButton
-                        android:id="@+id/clear_button"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_gravity="end"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:contentDescription="@string/cancel_button_txt"
-                        android:src="@drawable/ic_cancel" />
+                <ImageButton
+                    android:id="@+id/clear_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:contentDescription="@string/cancel_button_txt"
+                    android:src="@drawable/ic_cancel" />
 
                 <EditText
                     android:id="@+id/textRaw"
@@ -83,11 +98,12 @@
                     android:layout_marginEnd="48dp"
                     android:background="@android:color/transparent"
                     android:gravity="start|top"
-                    android:text="@{viewModel.textEntered}"
                     android:hint="@string/text_to_translate_field"
                     android:importantForAutofill="no"
                     android:inputType="textMultiLine"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    android:text="@{viewModel.textEntered}" />
+
             </com.google.android.material.card.MaterialCardView>
 
             <RelativeLayout
@@ -95,33 +111,41 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_centerVertical="true"
+                    android:text="@string/to_text_spinner"/>
+
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/target_lang_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:spinnerMode="dialog"
-                    android:layout_marginStart="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="48dp"
                     android:layout_marginBottom="16dp"
-                    android:layout_centerVertical="true"
-                    android:entries="@array/target_lang" />
+                    android:entries="@array/target_lang"
+                    android:spinnerMode="dialog" />
 
                 <ImageButton
                     android:id="@+id/switch_button"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="end"
-                    android:layout_centerVertical="true"
                     android:contentDescription="@string/switch_button_txt"
                     android:src="@drawable/ic_change_circle" />
 
             </RelativeLayout>
-
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -144,13 +168,13 @@
                         style="?android:attr/progressBarStyle"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:visibility="invisible"
-                        android:indeterminateTint="@color/app_theme" />
+                        android:indeterminateTint="@color/app_theme"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/progressBarText"
@@ -158,18 +182,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/loading"
-                        android:visibility="gone"
-                        android:textColor="@color/app_theme" />
+                        android:textColor="@color/app_theme"
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/textTranslated"
                         style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:gravity="start|top"
-                        android:layout_alignParentStart="true"
                         android:hint="@string/translation_hint"
                         android:inputType="textMultiLine|textNoSuggestions"
                         android:minHeight="50dp"
@@ -186,8 +210,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="4dp"
-                android:visibility="gone"
-                android:text="@string/translate_text_btn" />
+                android:text="@string/translate_text_btn"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

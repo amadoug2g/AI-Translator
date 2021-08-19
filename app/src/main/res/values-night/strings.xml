@@ -10,4 +10,5 @@
     <string name="cancel_button_txt">cancel button</string>
     <string name="delete_text_btn">Clear</string>
     <string name="switch_button_txt">Switch languages</string>
+    <string name="from_text_spinner">From:</string>
 </resources>
