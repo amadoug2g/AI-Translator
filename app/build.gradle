@@ -88,4 +88,7 @@ dependencies {
 
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //Flexbox
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 }
