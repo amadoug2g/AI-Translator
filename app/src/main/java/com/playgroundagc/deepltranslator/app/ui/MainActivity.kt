@@ -10,15 +10,21 @@ import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.library.BuildConfig
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
-import com.playgroundagc.deepltranslator.BuildConfig
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.app.framework.RetrofitInstance
 import com.playgroundagc.deepltranslator.data.LocalDataSourceImpl
 import com.playgroundagc.deepltranslator.data.RemoteDataSourceImpl
 import com.playgroundagc.deepltranslator.data.RepositoryImpl
 import com.playgroundagc.deepltranslator.databinding.ActivityMainBinding
+import com.playgroundagc.deepltranslator.databinding.MainActivityBinding
 import com.playgroundagc.deepltranslator.domain.Response
 import com.playgroundagc.deepltranslator.domain.SourceLang
 import com.playgroundagc.deepltranslator.domain.TargetLang
@@ -32,17 +38,25 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private lateinit var binding: ActivityMainBinding
+        private lateinit var bindingBis: MainActivityBinding
         private lateinit var viewModel: MainViewModel
     }
+        lateinit var navController: NavController
 
     //region Override Methods
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
 
-        setupViews()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+        //setupActionBarWithNavController(findNavController(R.id.fragment))
+
+        //setupViews()
         initTimber()
-        initViewModel()
+        //initViewModel()
         setupSpinners()
         setupListeners()
         setupObservers()
@@ -58,6 +72,11 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
         saveSourceLanguage()
         saveTargetLanguage()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.fragment)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
     //endregion
 
@@ -78,11 +97,17 @@ class MainActivity : AppCompatActivity() {
      * Detected Source Language & Clear Text Visibility
      * */
     private fun checkRawInput() {
-        if (binding.textRaw.text.isNotEmpty() || binding.sourceLangSpinner.selectedItemPosition == 0) binding.detectedSourceLanguage.setVisible(true)
+        if (binding.textRaw.text.isNotEmpty() || binding.sourceLangSpinner.selectedItemPosition == 0) binding.detectedSourceLanguage.setVisible(
+            true
+        )
 
-        if (binding.textRaw.text.isEmpty() || binding.sourceLangSpinner.selectedItemPosition != 0) binding.detectedSourceLanguage.setVisible(false)
+        if (binding.textRaw.text.isEmpty() || binding.sourceLangSpinner.selectedItemPosition != 0) binding.detectedSourceLanguage.setVisible(
+            false
+        )
 
-        if (binding.textRaw.text.isEmpty()) binding.clearButton.setVisible(false) else binding.clearButton.setVisible(true)
+        if (binding.textRaw.text.isEmpty()) binding.clearButton.setVisible(false) else binding.clearButton.setVisible(
+            true
+        )
     }
 
     /**
@@ -228,8 +253,14 @@ class MainActivity : AppCompatActivity() {
     private fun restoreLanguages() {
         val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
 
-        val sourceLang = prefs.getInt("lastSource", viewModel.lastUsedSourceLang.value ?: binding.sourceLangSpinner.selectedItemPosition)
-        val targetLang = prefs.getInt("lastTarget", viewModel.lastUsedTargetLang.value ?: binding.targetLangSpinner.selectedItemPosition)
+        val sourceLang = prefs.getInt(
+            "lastSource",
+            viewModel.lastUsedSourceLang.value ?: binding.sourceLangSpinner.selectedItemPosition
+        )
+        val targetLang = prefs.getInt(
+            "lastTarget",
+            viewModel.lastUsedTargetLang.value ?: binding.targetLangSpinner.selectedItemPosition
+        )
 
         binding.sourceLangSpinner.setSelection(sourceLang)
         binding.targetLangSpinner.setSelection(targetLang)
@@ -412,8 +443,8 @@ class MainActivity : AppCompatActivity() {
         val remoteDataSource = RemoteDataSourceImpl(retrofitInstance)
         val repository = RepositoryImpl(localDataSource, remoteDataSource)
         val translateTextUseCase = TranslateTextUseCase(repository)
-        val viewModelFactory = MainViewModelFactory(translateTextUseCase)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        //val viewModelFactory = MainViewModelFactory(translateTextUseCase)
+        //viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
     }
     //endregion
 

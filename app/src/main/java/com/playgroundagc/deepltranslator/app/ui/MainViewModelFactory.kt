@@ -10,9 +10,10 @@ import com.playgroundagc.deepltranslator.usecases.TranslateTextUseCase
  * Main ViewModel Factory
  *
  */
-
+/*
 class MainViewModelFactory(private val translateTextUseCase: TranslateTextUseCase): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return MainViewModel(translateTextUseCase) as T
     }
 }
+ */

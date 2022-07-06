@@ -4,7 +4,186 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/language_selection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:justifyContent="space_evenly"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView_1x"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    app:justifyContent="space_evenly">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <androidx.constraintlayout.utils.widget.ImageFilterView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/dutch" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:text="From"
+                            android:textColor="@color/app_theme" />
+
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@null"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        app:icon="@drawable/ic_change_circle"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        app:iconTint="@color/app_theme" />
+
+                    <ImageButton
+                        android:id="@+id/switch_button01"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:contentDescription="@string/switch_button_txt"
+                        android:src="@drawable/ic_change_circle"
+                        android:visibility="gone" />
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView_2x"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    app:justifyContent="space_evenly">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <androidx.constraintlayout.utils.widget.ImageFilterView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/dutch" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:text="From"
+                            android:textColor="@color/app_theme" />
+
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@null"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        app:icon="@drawable/ic_change_circle"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        app:iconTint="@color/app_theme" />
+
+                    <ImageButton
+                        android:id="@+id/switch_button"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:contentDescription="@string/switch_button_txt"
+                        android:src="@drawable/ic_change_circle"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <androidx.constraintlayout.utils.widget.ImageFilterView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/dutch" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:text="To"
+                            android:textColor="@color/app_theme" />
+
+                    </LinearLayout>
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.cardview.widget.CardView>
+
+    </com.google.android.flexbox.FlexboxLayout>
     <androidx.cardview.widget.CardView
+        android:visibility="gone"
         android:id="@+id/cardView_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +217,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="null"
+                        android:background="@null"
                         android:text="From"
                         android:textColor="@color/app_theme" />
 
@@ -48,7 +227,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="52dp"
                     android:layout_height="52dp"
-                    android:background="null"
+                    android:background="@null"
                     android:insetLeft="0dp"
                     android:insetTop="0dp"
                     android:insetRight="0dp"
@@ -86,7 +265,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="null"
+                        android:background="@null"
                         android:text="To"
                         android:textColor="@color/app_theme" />
 
@@ -111,7 +290,7 @@
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardView_1">
+        app:layout_constraintTop_toBottomOf="@id/language_selection">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -128,7 +307,7 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:background="null"
+                    android:background="@null"
                     android:layout_height="wrap_content"
                     android:text="@string/lorem"
                     android:inputType="textMultiLine"
@@ -146,7 +325,7 @@
                     android:id="@+id/copy_content_btn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="null"
+                    android:background="@null"
                     android:insetLeft="0dp"
                     android:insetTop="0dp"
                     android:insetRight="0dp"
@@ -162,7 +341,7 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="8dp"
                     android:layout_toEndOf="@id/copy_content_btn"
-                    android:background="null"
+                    android:background="@null"
                     android:insetLeft="0dp"
                     android:insetTop="0dp"
                     android:insetRight="0dp"
@@ -227,7 +406,7 @@
                     android:id="@+id/copy_content_button"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="null"
+                    android:background="@null"
                     android:insetLeft="0dp"
                     android:insetTop="0dp"
                     android:insetRight="0dp"
@@ -243,7 +422,7 @@
                     android:visibility="gone"
                     android:layout_marginStart="8dp"
                     android:layout_toEndOf="@id/copy_content_button"
-                    android:background="null"
+                    android:background="@null"
                     android:insetLeft="0dp"
                     android:insetTop="0dp"
                     android:insetRight="0dp"

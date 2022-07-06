@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/translationFragment">
+
+    <fragment
+        android:id="@+id/translationFragment"
+        android:name="com.playgroundagc.deepltranslator.app.ui.TranslationFragment"
+        android:label="AI Translator"
+        tools:layout="@layout/fragment_translation">
+        <action
+            android:id="@+id/translationFragmentToLanguageSelectFragment"
+            app:destination="@id/languageSelectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/languageSelectFragment"
+        android:name="com.playgroundagc.deepltranslator.app.ui.LanguageSelectFragment"
+        android:label="Language selection"
+        tools:layout="@layout/fragment_language_select" >
+        <argument
+            android:name="origin_page"
+            app:argType="string" />
+    </fragment>
+</navigation>
