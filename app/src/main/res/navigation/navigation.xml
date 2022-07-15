@@ -11,8 +11,10 @@
         android:label="AI Translator"
         tools:layout="@layout/fragment_translation">
         <action
-            android:id="@+id/translationFragmentToLanguageSelectFragment"
-            app:destination="@id/languageSelectFragment" />
+            android:id="@+id/translationToLanguageSelect"
+            app:destination="@id/languageSelectFragment"
+            app:enterAnim="@anim/slide_down"
+            app:exitAnim="@anim/slide_up" />
     </fragment>
     <fragment
         android:id="@+id/languageSelectFragment"

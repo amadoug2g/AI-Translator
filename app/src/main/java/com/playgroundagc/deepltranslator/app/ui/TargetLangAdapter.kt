@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.playgroundagc.deepltranslator.databinding.SimpleLayoutFileBinding
 import com.playgroundagc.deepltranslator.domain.SourceLang
 import com.playgroundagc.deepltranslator.domain.TargetLang
+import com.playgroundagc.deepltranslator.util.selectImageCategory
 
 /**
  * Created by Amadou on 06/07/2022, 13:48
@@ -30,7 +31,7 @@ class TargetLangAdapter(private val targetLangList: Array<TargetLang>): Recycler
     class TargetViewHolder(val binding: SimpleLayoutFileBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(targetLang: TargetLang) {
             with(binding) {
-                this.countryImage.setImageResource(targetLang.imageCategory)
+                this.countryImage.setImageResource(targetLang.selectImageCategory())
                 this.countryText.text = targetLang.language
             }
         }

@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.domain.TargetLang
+import com.playgroundagc.deepltranslator.util.selectImageCategory
 
 /**
  * Created by Amadou on 23/06/2021, 16:55
@@ -37,7 +38,7 @@ class CountryTargetAdapter(context: Context, var countryList: Array<TargetLang>)
 
         item.countryName.text = country.language
 
-        item.countryImage.setImageResource(country.imageCategory)
+        item.countryImage.setImageResource(country.selectImageCategory())
 
         return view
     }

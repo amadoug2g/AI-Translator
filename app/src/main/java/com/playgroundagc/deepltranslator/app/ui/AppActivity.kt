@@ -32,7 +32,7 @@ class AppActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fragmentApp)
         return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+                //|| super.onSupportNavigateUp()
     }
 
     private fun setupNavigation() {

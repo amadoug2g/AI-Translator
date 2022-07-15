@@ -3,8 +3,10 @@ package com.playgroundagc.deepltranslator.app.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.SimpleLayoutFileBinding
 import com.playgroundagc.deepltranslator.domain.SourceLang
+import com.playgroundagc.deepltranslator.util.selectImageCategory
 
 /**
  * Created by Amadou on 06/07/2022, 13:29
@@ -13,7 +15,8 @@ import com.playgroundagc.deepltranslator.domain.SourceLang
  *
  */
 
-class SourceLangAdapter(private val sourceLangList: Array<SourceLang>): RecyclerView.Adapter<SourceLangAdapter.SourceViewHolder>() {
+class SourceLangAdapter(private val sourceLangList: Array<SourceLang>) :
+    RecyclerView.Adapter<SourceLangAdapter.SourceViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SourceViewHolder {
         return SourceViewHolder.from(parent)
@@ -26,11 +29,14 @@ class SourceLangAdapter(private val sourceLangList: Array<SourceLang>): Recycler
 
     override fun getItemCount(): Int = sourceLangList.size
 
-    class SourceViewHolder(val binding: SimpleLayoutFileBinding): RecyclerView.ViewHolder(binding.root) {
+    class SourceViewHolder(val binding: SimpleLayoutFileBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(sourceLang: SourceLang) {
             with(binding) {
-                this.countryImage.setImageResource(sourceLang.imageCategory)
-                this.countryText.text = sourceLang.language
+                this.apply {
+                    countryImage.setImageResource(sourceLang.selectImageCategory())
+                    countryText.text = sourceLang.language
+                }
             }
         }
 

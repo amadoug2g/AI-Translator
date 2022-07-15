@@ -1,15 +1,14 @@
 package com.playgroundagc.deepltranslator.app.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.FragmentTranslationBinding
+import org.jetbrains.anko.support.v4.toast
 
 class TranslationFragment : Fragment() {
 
@@ -28,21 +27,21 @@ class TranslationFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_translation, container, false)
 
         binding.apply {
-            fromTranslationBtn.apply {
-                background = null
+            languageSelectFrom.apply {
                 setOnClickListener {
                     val bundle = bundleOf("origin" to "fromBtn")
-                    navigate(R.id.translationFragmentToLanguageSelectFragment, bundle)
+                    navigate(R.id.translationToLanguageSelect, bundle)
                 }
             }
 
-            toTranslationBtn.apply {
+            languageSelectTo.apply {
                 setOnClickListener {
                     val bundle = bundleOf("origin" to "toBtn")
-                    navigate(R.id.translationFragmentToLanguageSelectFragment, bundle)
+                    navigate(R.id.translationToLanguageSelect, bundle)
                 }
             }
 
+            fromTranslationBtn.background = null
             toTranslationBtn.background = null
             copyContentBtn.background = null
             copyContentButtonTranslated.background = null
@@ -53,10 +52,31 @@ class TranslationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.api_usage -> showApiUsage()
+        }
+            return super.onContextItemSelected(item)
+    }
+
+    private fun showApiUsage() {
+        TODO("Not yet implemented")
+        toast("To be implemented!")
+    }
+
     private fun navigate(origin: String = "") {
         //val action = LanguageSelectFragment
         Navigation.findNavController(binding.fromTranslationBtn)
-            .navigate(R.id.translationFragmentToLanguageSelectFragment)
+            .navigate(R.id.translationToLanguageSelect)
     }
 
 
