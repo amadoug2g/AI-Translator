@@ -7,18 +7,16 @@
 
     <fragment
         android:id="@+id/translationFragment"
-        android:name="com.playgroundagc.deepltranslator.app.ui.TranslationFragment"
+        android:name="com.playgroundagc.deepltranslator.presentation.fragment.TranslationFragment"
         android:label="AI Translator"
         tools:layout="@layout/fragment_translation">
         <action
             android:id="@+id/translationToLanguageSelect"
-            app:destination="@id/languageSelectFragment"
-            app:enterAnim="@anim/slide_down"
-            app:exitAnim="@anim/slide_up" />
+            app:destination="@id/languageSelectFragment" />
     </fragment>
     <fragment
         android:id="@+id/languageSelectFragment"
-        android:name="com.playgroundagc.deepltranslator.app.ui.LanguageSelectFragment"
+        android:name="com.playgroundagc.deepltranslator.presentation.fragment.LanguageSelectFragment"
         android:label="Language selection"
         tools:layout="@layout/fragment_language_select" >
         <argument

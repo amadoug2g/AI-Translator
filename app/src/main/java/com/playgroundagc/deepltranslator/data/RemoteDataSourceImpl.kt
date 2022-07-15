@@ -1,6 +1,6 @@
 package com.playgroundagc.deepltranslator.data
 
-import com.playgroundagc.deepltranslator.app.framework.RetrofitInstance
+import com.playgroundagc.deepltranslator.framework.RetrofitInstance
 import com.playgroundagc.deepltranslator.domain.Translations
 import com.playgroundagc.deepltranslator.util.Constants
 import retrofit2.Response

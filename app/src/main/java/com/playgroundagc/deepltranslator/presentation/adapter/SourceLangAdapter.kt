@@ -1,9 +1,8 @@
-package com.playgroundagc.deepltranslator.app.ui
+package com.playgroundagc.deepltranslator.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.SimpleLayoutFileBinding
 import com.playgroundagc.deepltranslator.domain.SourceLang
 import com.playgroundagc.deepltranslator.util.selectImageCategory

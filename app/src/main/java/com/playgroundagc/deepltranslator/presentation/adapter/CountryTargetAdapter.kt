@@ -1,4 +1,4 @@
-package com.playgroundagc.deepltranslator.app.ui
+package com.playgroundagc.deepltranslator.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

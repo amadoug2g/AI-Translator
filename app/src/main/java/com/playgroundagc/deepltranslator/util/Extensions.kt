@@ -1,16 +1,19 @@
 package com.playgroundagc.deepltranslator.util
 
+import android.view.View
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.domain.SourceLang
 import com.playgroundagc.deepltranslator.domain.TargetLang
-
+//import com.playgroundagc.core.data.SourceLang
+//import com.playgroundagc.core.data.TargetLang
 /**
  * Created by Amadou on 15/07/2022, 18:49
  *
- * Purpose:
+ * Purpose: Extension functions
  *
  */
 
+//region Language
 fun SourceLang.selectImageCategory(): Int {
     return when (this.language) {
         "Bulgarian" -> R.drawable.bulgarian
@@ -73,3 +76,17 @@ fun TargetLang.selectImageCategory(): Int {
         else -> R.drawable.ic_question_mark
     }
 }
+//endregion
+
+//region Views
+fun View.setVisible(state: Boolean) {
+    when (state) {
+        true -> {
+            this.visibility = View.VISIBLE
+        }
+        false -> {
+            this.visibility = View.GONE
+        }
+    }
+}
+//endregion

@@ -1,4 +1,4 @@
-package com.playgroundagc.deepltranslator.app.framework
+package com.playgroundagc.deepltranslator.framework
 
 import com.playgroundagc.deepltranslator.data.RemoteDataSource
 import com.playgroundagc.deepltranslator.util.Constants.BASE_URL

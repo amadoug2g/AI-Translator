@@ -11,15 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.BuildConfig
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.playgroundagc.deepltranslator.R
-import com.playgroundagc.deepltranslator.app.framework.RetrofitInstance
+import com.playgroundagc.deepltranslator.framework.RetrofitInstance
 import com.playgroundagc.deepltranslator.data.LocalDataSourceImpl
 import com.playgroundagc.deepltranslator.data.RemoteDataSourceImpl
 import com.playgroundagc.deepltranslator.data.RepositoryImpl
@@ -29,6 +26,8 @@ import com.playgroundagc.deepltranslator.domain.Response
 import com.playgroundagc.deepltranslator.domain.SourceLang
 import com.playgroundagc.deepltranslator.domain.TargetLang
 import com.playgroundagc.deepltranslator.extension.setVisible
+import com.playgroundagc.deepltranslator.presentation.adapter.CountrySourceAdapter
+import com.playgroundagc.deepltranslator.presentation.adapter.CountryTargetAdapter
 import com.playgroundagc.deepltranslator.usecases.TranslateTextUseCase
 import timber.log.Timber
 

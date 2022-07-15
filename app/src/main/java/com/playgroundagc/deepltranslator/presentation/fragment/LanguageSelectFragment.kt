@@ -1,4 +1,4 @@
-package com.playgroundagc.deepltranslator.app.ui
+package com.playgroundagc.deepltranslator.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.FragmentLanguageSelectBinding
 import com.playgroundagc.deepltranslator.domain.SourceLang
 import com.playgroundagc.deepltranslator.domain.TargetLang
+import com.playgroundagc.deepltranslator.presentation.adapter.SourceLangAdapter
+import com.playgroundagc.deepltranslator.presentation.adapter.TargetLangAdapter
 
 private const val ARG_PARAM1 = "origin"
 
@@ -41,7 +41,7 @@ class LanguageSelectFragment : Fragment() {
         binding.recentLanguageRecycler.visibility = View.GONE
 
         when (origin) {
-            "fromBtn" -> setupRecyclerSource()
+            "source" -> setupRecyclerSource()
             else -> setupRecyclerTarget()
         }
 
