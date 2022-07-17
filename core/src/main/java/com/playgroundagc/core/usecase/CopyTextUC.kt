@@ -6,5 +6,6 @@ package com.playgroundagc.core.usecase
  * Purpose:
  *
  */
-class CopyTranslationUC {
+
+class CopyTextUC {
 }

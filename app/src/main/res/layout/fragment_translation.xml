@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="UiState"
+            type="com.playgroundagc.core.data.TranslationUiState" />
+    </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
 
@@ -11,7 +18,7 @@
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/language_selection_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:alignItems="center"
             app:justifyContent="space_evenly"
@@ -21,7 +28,8 @@
 
             <include
                 android:id="@+id/source_lang_spinner"
-                layout="@layout/source_lang_spinner" />
+                bind:source="@{UiState.sourceLang}"
+                layout="@layout/source_lang_spinner"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/change_btn"
@@ -35,15 +43,11 @@
                 app:icon="@drawable/ic_change_circle"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
-                app:iconTint="@color/app_theme"
-                app:layout_constraintBottom_toBottomOf="@id/separator"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:iconTint="@color/app_theme" />
 
             <include
                 android:id="@+id/target_lang_spinner"
+                bind:target="@{UiState.targetLang}"
                 layout="@layout/target_lang_spinner" />
 
         </com.google.android.flexbox.FlexboxLayout>
@@ -54,7 +58,7 @@
             android:layout_height="1dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:background="#ffc0c0c0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,14 +69,16 @@
             layout="@layout/input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separator" />
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            bind:UiState="@{UiState}" />
 
         <include
             android:id="@+id/output_layout"
             layout="@layout/output_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_layout" />
+            app:layout_constraintTop_toBottomOf="@id/input_layout"
+            bind:UiState="@{UiState}" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

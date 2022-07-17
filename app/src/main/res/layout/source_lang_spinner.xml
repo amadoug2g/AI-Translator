@@ -2,6 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="source"
+            type="com.playgroundagc.core.data.SourceLang" />
+
+        <import
+            alias="Extension"
+            type="com.playgroundagc.deepltranslator.util.ExtensionsKt" />
+    </data>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/source_select_cardView"
         android:layout_width="140dp"
@@ -20,11 +31,11 @@
             app:alignItems="center"
             app:justifyContent="space_evenly">
 
-            <androidx.constraintlayout.utils.widget.ImageFilterView
+            <ImageView
                 android:id="@+id/source_flag_img"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/dutch" />
+                android:contentDescription="@string/source_language_flag" />
 
             <TextView
                 android:id="@+id/source_text"
@@ -33,7 +44,7 @@
                 android:layout_margin="4dp"
                 android:fontFamily="@font/ibm_plex_sans"
                 android:maxLines="1"
-                android:text="From"
+                android:text="@{source.language}"
                 android:textColor="@color/app_theme"
                 android:textSize="13sp" />
 

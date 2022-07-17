@@ -5,14 +5,18 @@ import android.view.*
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.FragmentTranslationBinding
+import com.playgroundagc.deepltranslator.util.selectImageCategory
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.toast
 
 class TranslationFragment : Fragment() {
+    val viewModel: FragmentViewModel by activityViewModels()
 
     companion object {
         private lateinit var binding: FragmentTranslationBinding
@@ -30,6 +34,7 @@ class TranslationFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_translation, container, false)
 
         setupViews()
+        setupObservers()
 
         return binding.root
     }
@@ -48,6 +53,17 @@ class TranslationFragment : Fragment() {
         }
         return super.onContextItemSelected(item)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val navController = findNavController();
+        // We use a String here, but any type that can be put in a Bundle is supported
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")?.observe(
+            viewLifecycleOwner
+        ) { result ->
+            // Do something with the result.
+            toast(result)
+        }
+    }
     //endregion
 
     //region Setup
@@ -60,6 +76,7 @@ class TranslationFragment : Fragment() {
                         navigate(R.id.translationToLanguageSelect, bundle)
                     }
                 }
+                sourceFlagImg.background = null
             }
 
             changeBtn.apply {
@@ -91,8 +108,19 @@ class TranslationFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        lifecycleScope.launch {  }
-
+        lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                binding.uiState = state
+                state.sourceLang?.selectImageCategory()
+                    ?.let {
+                        binding.sourceLangSpinner.sourceFlagImg.setImageResource(it)
+                    }
+                state.targetLang?.selectImageCategory()
+                    ?.let {
+                        binding.targetLangSpinner.targetFlagImg.setImageResource(it)
+                    }
+            }
+        }
     }
     //endregion
 

@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupSpinners() {
         binding.sourceLangSpinner.adapter =
-            CountrySourceAdapter(applicationContext, SourceLang.values())
+            CountrySourceAdapter(applicationContext, com.playgroundagc.core.data.SourceLang.values())
         binding.targetLangSpinner.adapter =
             CountryTargetAdapter(applicationContext, TargetLang.values())
     }

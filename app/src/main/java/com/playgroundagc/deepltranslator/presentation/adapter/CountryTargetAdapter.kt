@@ -56,7 +56,7 @@ class CountryTargetAdapter(context: Context, var countryList: Array<TargetLang>)
     }
 
     private class ItemHolder(row: View?) {
-        val countryName: TextView = row?.findViewById(R.id.country_text) as TextView
-        val countryImage: ImageView = row?.findViewById(R.id.country_image) as ImageView
+        val countryName: TextView = row?.findViewById(R.id.language_name) as TextView
+        val countryImage: ImageView = row?.findViewById(R.id.language_flag) as ImageView
     }
 }

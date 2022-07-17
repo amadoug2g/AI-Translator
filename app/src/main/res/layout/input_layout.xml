@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <variable
+            name="UiState"
+            type="com.playgroundagc.core.data.TranslationUiState" />
+    </data>
+
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/input_cardView"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:maxHeight="300dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp">
@@ -20,6 +27,7 @@
                 android:id="@+id/input_edittext"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:text="@{UiState.inputText}"
                 android:background="@null"
                 android:gravity="top"
                 android:hint="@string/input_edittext_hint"

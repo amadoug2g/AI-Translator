@@ -12,12 +12,14 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.ActivityAppBinding
+import com.playgroundagc.deepltranslator.presentation.fragment.FragmentViewModel
 
 class AppActivity : AppCompatActivity() {
 
     companion object {
         private lateinit var binding: ActivityAppBinding
         private lateinit var appBarConfiguration: AppBarConfiguration
+        lateinit var viewModel: FragmentViewModel
     }
 
     lateinit var navController: NavController

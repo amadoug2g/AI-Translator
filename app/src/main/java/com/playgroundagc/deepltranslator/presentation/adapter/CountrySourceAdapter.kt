@@ -8,7 +8,8 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.playgroundagc.deepltranslator.R
-import com.playgroundagc.deepltranslator.domain.SourceLang
+//import com.playgroundagc.deepltranslator.domain.SourceLang
+import com.playgroundagc.core.data.SourceLang
 import com.playgroundagc.deepltranslator.util.selectImageCategory
 
 /**
@@ -58,7 +59,7 @@ class CountrySourceAdapter(context: Context, var countryList: Array<SourceLang>)
     }
 
     private class ItemHolder(row: View?) {
-        val countryName: TextView = row?.findViewById(R.id.country_text) as TextView
-        val countryImage: ImageView = row?.findViewById(R.id.country_image) as ImageView
+        val countryName: TextView = row?.findViewById(R.id.language_name) as TextView
+        val countryImage: ImageView = row?.findViewById(R.id.language_flag) as ImageView
     }
 }
