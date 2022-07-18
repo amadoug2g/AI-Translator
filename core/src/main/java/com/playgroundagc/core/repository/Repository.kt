@@ -1,7 +1,7 @@
 package com.playgroundagc.core.repository
 
+import com.playgroundagc.core.data.TranslationList
 import com.playgroundagc.core.data.TranslationQuery
-import com.playgroundagc.core.data.TranslationResponse
 import com.playgroundagc.core.data.UsageResponse
 import retrofit2.Response
 
@@ -13,6 +13,6 @@ import retrofit2.Response
  */
 
 interface Repository {
-    suspend fun translateText(translationQuery: TranslationQuery): Response<TranslationResponse>
+    suspend fun translateText(translationQuery: TranslationQuery): Response<TranslationList>
     suspend fun getUsage(): Response<UsageResponse>
 }

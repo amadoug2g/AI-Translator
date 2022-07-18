@@ -3,7 +3,7 @@ package com.playgroundagc.core.data
 /**
  * Created by Amadou on 15/07/2022, 20:27
  *
- * Purpose:
+ * Purpose: Ui State Model
  *
  */
 
@@ -14,10 +14,13 @@ data class TranslationUiState(
     val targetLang: TargetLang = TargetLang.BG,
     val inputText: String = "",
     val outputText: String = "",
+    val errorMessage: String = ""
 ) {
-
-}
-
-fun TranslationUiState.toQuery(): TranslationQuery {
-    return TranslationQuery(text = this.inputText, target_lang = this.targetLang)
+    fun toQuery(): TranslationQuery {
+        return TranslationQuery(
+            text = this.inputText,
+            source_lang = sourceLang.name,
+            target_lang = this.targetLang.name
+        )
+    }
 }

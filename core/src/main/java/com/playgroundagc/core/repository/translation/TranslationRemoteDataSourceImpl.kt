@@ -1,5 +1,6 @@
 package com.playgroundagc.core.repository.translation
 
+import com.playgroundagc.core.data.TranslationList
 import com.playgroundagc.core.data.TranslationResponse
 import com.playgroundagc.core.data.UsageResponse
 import retrofit2.Response
@@ -17,7 +18,7 @@ class TranslationRemoteDataSourceImpl(private val translationApi: TranslationApi
         auth_key: String,
         text: String,
         target_lang: String
-    ): Response<TranslationResponse> {
+    ): Response<TranslationList> {
         return translationApi.retrofitService.translateText(auth_key, text, target_lang)
     }
 

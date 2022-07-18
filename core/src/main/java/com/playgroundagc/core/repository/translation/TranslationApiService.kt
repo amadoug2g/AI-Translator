@@ -1,10 +1,10 @@
 package com.playgroundagc.core.repository.translation
 
-import com.playgroundagc.core.data.TranslationResponse
+import com.playgroundagc.core.data.TranslationList
 import com.playgroundagc.core.data.UsageResponse
 import com.playgroundagc.core.util.Constants
 import retrofit2.Response
-import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 /**
@@ -15,14 +15,14 @@ import retrofit2.http.Query
  */
 
 interface TranslationApiService {
-    @GET("v2/translate")
+    @POST("v2/translate")
     suspend fun translateText(
         @Query("auth_key") auth_key: String = Constants.AUTH_KEY,
         @Query("text") text: String,
         @Query("target_lang") target_lang: String
-    ): Response<TranslationResponse>
+    ): Response<TranslationList>
 
-    @GET("v2/usage")
+    @POST("v2/usage")
     suspend fun getUsage(
         @Query("auth_key") AUTH_KEY: String = Constants.AUTH_KEY
     ): Response<UsageResponse>

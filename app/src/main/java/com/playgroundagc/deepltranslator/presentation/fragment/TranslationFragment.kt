@@ -1,10 +1,13 @@
 package com.playgroundagc.deepltranslator.presentation.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,11 +22,14 @@ import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.toast
 
 class TranslationFragment : Fragment() {
+
+    //region Variables
     val viewModel: FragmentViewModel by activityViewModels()
 
     companion object {
         private lateinit var binding: FragmentTranslationBinding
     }
+    //endregion
 
     //region Override Methods
     override fun onCreateView(
@@ -31,6 +37,9 @@ class TranslationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_translation, container, false)
+
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         setupViews()
         setupObservers()
@@ -107,6 +116,18 @@ class TranslationFragment : Fragment() {
                         translate()
                     }
                 }
+
+                inputEdittext.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        viewModel?.setInputText(p0.toString())
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+                    }
+                })
             }
 
             outputLayout.apply {
@@ -127,6 +148,8 @@ class TranslationFragment : Fragment() {
                     .let {
                         binding.targetLangSpinner.targetFlagImg.setImageResource(it)
                     }
+
+                binding.progressBar.visibility = if (state.isFetchingTranslation) View.VISIBLE else View.INVISIBLE
             }
         }
     }

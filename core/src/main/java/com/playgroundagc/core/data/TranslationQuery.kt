@@ -9,8 +9,8 @@ package com.playgroundagc.core.data
 
 data class TranslationQuery(
     var text: String = "",
-    var source_lang: String? = null,
-    var target_lang: TargetLang = TargetLang.EN,
+    var source_lang: String,
+    var target_lang: String,
     var split_sentences: String? = null,
     var preserve_formatting: String? = null,
     var formality: Formality? = Formality.DEFAULT,

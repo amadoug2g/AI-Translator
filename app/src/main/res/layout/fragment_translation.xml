@@ -2,10 +2,15 @@
 <layout xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="UiState"
             type="com.playgroundagc.core.data.TranslationUiState" />
+
+        <variable
+            name="viewModel"
+            type="com.playgroundagc.deepltranslator.presentation.fragment.FragmentViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -71,6 +76,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/separator"
             bind:UiState="@{UiState}" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:indeterminate="true"
+            style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/output_layout"

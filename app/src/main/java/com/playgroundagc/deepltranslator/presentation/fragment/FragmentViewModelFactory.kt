@@ -8,7 +8,7 @@ import com.playgroundagc.core.usecase.TranslateTextUC
 /**
  * Created by Amadou on 18/07/2022, 09:58
  *
- * Purpose:
+ * Purpose: Fragment ViewModel Factory
  *
  */
 

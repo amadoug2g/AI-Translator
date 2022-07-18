@@ -34,7 +34,7 @@
                 android:gravity="top"
                 android:padding="4dp"
                 android:textSize="14sp"
-                android:text="@{UiState.inputText}"
+                android:text="@{UiState.outputText}"
                 app:layout_constraintBottom_toTopOf="@id/output_copy_content_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
