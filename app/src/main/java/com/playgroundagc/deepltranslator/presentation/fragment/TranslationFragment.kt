@@ -3,9 +3,12 @@ package com.playgroundagc.deepltranslator.presentation.fragment
 import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -23,10 +26,6 @@ class TranslationFragment : Fragment() {
     }
 
     //region Override Methods
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,24 +38,27 @@ class TranslationFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-    }
-
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.api_usage -> showApiUsage()
-        }
-        return super.onContextItemSelected(item)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val navController = findNavController();
-        // We use a String here, but any type that can be put in a Bundle is supported
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.main_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.api_usage -> {
+                        showApiUsage()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        val navController = findNavController()
+
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")?.observe(
             viewLifecycleOwner
         ) { result ->
@@ -99,6 +101,12 @@ class TranslationFragment : Fragment() {
             inputLayout.apply {
                 inputCopyContentBtn.background = null
                 inputPasteContentBtn.background = null
+                inputTranslateBtn.apply {
+                    background = null
+                    setOnClickListener {
+                        translate()
+                    }
+                }
             }
 
             outputLayout.apply {
@@ -111,12 +119,12 @@ class TranslationFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.uiState.collect { state ->
                 binding.uiState = state
-                state.sourceLang?.selectImageCategory()
-                    ?.let {
+                state.sourceLang.selectImageCategory()
+                    .let {
                         binding.sourceLangSpinner.sourceFlagImg.setImageResource(it)
                     }
-                state.targetLang?.selectImageCategory()
-                    ?.let {
+                state.targetLang.selectImageCategory()
+                    .let {
                         binding.targetLangSpinner.targetFlagImg.setImageResource(it)
                     }
             }
@@ -125,14 +133,19 @@ class TranslationFragment : Fragment() {
     //endregion
 
     //region Translation
+    private fun translate() {
+        lifecycleScope.launch {
+            viewModel.translation()
+        }
+    }
+
     private fun checkSwitchLang() {
-        TODO("Implement language switching")
+        //TODO("Implement language switching")
         toast("To be implemented!")
     }
 
     private fun showApiUsage() {
-        TODO("Not yet implemented")
-        toast("To be implemented!")
+        viewModel.getUsage()
     }
     //endregion
 

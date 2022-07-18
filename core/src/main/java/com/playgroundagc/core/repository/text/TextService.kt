@@ -6,5 +6,13 @@ package com.playgroundagc.core.repository.text
  * Purpose:
  *
  */
-interface TextService {
+
+class TextService: TextLocalDataSource {
+    override fun copyText() {
+        TODO("Not yet implemented")
+    }
+
+    override fun pasteText() {
+        TODO("Not yet implemented")
+    }
 }

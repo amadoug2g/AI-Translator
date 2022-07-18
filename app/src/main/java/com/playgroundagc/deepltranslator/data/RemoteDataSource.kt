@@ -1,6 +1,7 @@
 package com.playgroundagc.deepltranslator.data
 
 import com.playgroundagc.deepltranslator.domain.Translations
+import com.playgroundagc.deepltranslator.util.Constants
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,8 +16,8 @@ import retrofit2.http.Query
 interface RemoteDataSource {
     @GET("v2/translate")
     suspend fun translateText(
-            @Query("auth_key") AUTH_KEY: String,
-            @Query("text") text: String,
-            @Query("target_lang") target_lang: String
+        @Query("auth_key") AUTH_KEY: String = Constants.AUTH_KEY,
+        @Query("text") text: String,
+        @Query("target_lang") target_lang: String
     ): Response<Translations>
 }

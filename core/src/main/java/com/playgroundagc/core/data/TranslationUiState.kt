@@ -10,8 +10,14 @@ package com.playgroundagc.core.data
 data class TranslationUiState(
     val isFetchingTranslation: Boolean = false,
     val isDetectingLanguage: Boolean = true,
-    val sourceLang: SourceLang? = SourceLang.AUTO,
-    val targetLang: TargetLang? = TargetLang.BG,
-    val inputText: String? = "",
-    val outputText: String? = "",
-)
+    val sourceLang: SourceLang = SourceLang.AUTO,
+    val targetLang: TargetLang = TargetLang.BG,
+    val inputText: String = "",
+    val outputText: String = "",
+) {
+
+}
+
+fun TranslationUiState.toQuery(): TranslationQuery {
+    return TranslationQuery(text = this.inputText, target_lang = this.targetLang)
+}

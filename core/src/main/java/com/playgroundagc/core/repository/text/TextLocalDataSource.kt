@@ -6,5 +6,8 @@ package com.playgroundagc.core.repository.text
  * Purpose:
  *
  */
-class TextLocalDataSource {
+
+interface TextLocalDataSource {
+    fun copyText()
+    fun pasteText()
 }

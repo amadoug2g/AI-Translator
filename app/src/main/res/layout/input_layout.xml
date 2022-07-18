@@ -35,12 +35,13 @@
                 android:inputType="textMultiLine"
                 android:padding="4dp"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@id/input_copy_content_btn"
+                app:layout_constraintBottom_toTopOf="@id/input_paste_content_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
+                android:visibility="gone"
                 android:id="@+id/input_copy_content_btn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -73,7 +74,26 @@
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
                 app:iconTint="@color/app_theme"
-                app:layout_constraintStart_toEndOf="@id/input_copy_content_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/input_edittext" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/input_translate_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                app:icon="@drawable/ic_arrow_forward"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/app_theme"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/input_edittext" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

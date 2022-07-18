@@ -36,6 +36,10 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+
+        freeCompilerArgs += [
+                "-Xjvm-default=all",
+        ]
     }
 }
 
@@ -64,7 +68,7 @@ dependencies {
     testImplementation 'android.arch.core:core-testing:1.1.1'
     // Instrumented Tests
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-    androidTestImplementation ("androidx.test.espresso:espresso-core:1", {
+    androidTestImplementation("androidx.test.espresso:espresso-core:1", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
@@ -86,9 +90,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
 
     //Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
 
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -100,4 +104,15 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.5.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.5.0"
     //implementation "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0"
+
+    //Hilt
+    // implementation "com.google.dagger:hilt-android:2.38.1"
+    // kapt "com.google.dagger:hilt-android-compiler:2.38.1"
+
+
+    // Dependency injection
+    // implementation "com.google.dagger:dagger:2.38.1"
+    // implementation "com.google.dagger:dagger-android-support:2.38.1"
+    // kapt "com.google.dagger:dagger-compiler:2.38.1"
+    // kapt "com.google.dagger:dagger-android-processor:2.38.1"
 }
