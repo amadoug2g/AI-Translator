@@ -1,9 +1,15 @@
 package com.playgroundagc.deepltranslator.presentation.fragment
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -14,11 +20,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.FragmentTranslationBinding
 import com.playgroundagc.deepltranslator.util.selectImageCategory
+import com.playgroundagc.deepltranslator.util.setVisible
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.toast
+
 
 class TranslationFragment : Fragment() {
 
@@ -42,6 +51,7 @@ class TranslationFragment : Fragment() {
 
         setupViews()
         setupObservers()
+        setupListeners()
 
         return binding.root
     }
@@ -115,6 +125,12 @@ class TranslationFragment : Fragment() {
                         translate()
                     }
                 }
+                inputClearContentBtn.apply {
+                    background = null
+                    setOnClickListener {
+                        clearFields()
+                    }
+                }
 
                 inputEdittext.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -139,6 +155,7 @@ class TranslationFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.uiState.collect { state ->
                 binding.uiState = state
+
                 state.sourceLang.selectImageCategory()
                     .let {
                         binding.sourceLangSpinner.sourceFlagImg.setImageResource(it)
@@ -148,14 +165,26 @@ class TranslationFragment : Fragment() {
                         binding.targetLangSpinner.targetFlagImg.setImageResource(it)
                     }
 
+                binding.outputLayout.outputCopyContentBtn.setOnClickListener {
+                    copyTranslation(state.outputText)
+                }
+
                 binding.progressBar.visibility =
                     if (state.isFetchingTranslation) View.VISIBLE else View.INVISIBLE
+
+                if (state.errorMessage.isNotEmpty()) showError()
             }
+        }
+    }
+
+    private fun setupListeners() {
+        binding.inputLayout.inputPasteContentBtn.setOnClickListener {
+            pasteText()
         }
     }
     //endregion
 
-    //region Translation
+    //region Functions
     private fun translate() {
         viewModel.translationProcess()
     }
@@ -165,8 +194,21 @@ class TranslationFragment : Fragment() {
         toast("To be implemented!")
     }
 
+    private fun copyTranslation(text: String) {
+        requireContext().copyToClipboard(text)
+    }
+
+    private fun pasteText() {
+        requireContext().pasteTextFromClipboard(binding.inputLayout.inputEdittext)
+    }
+
     private fun showApiUsage() {
         viewModel.apiUsageProcess()
+    }
+
+    private fun clearFields() {
+        binding.inputLayout.inputEdittext.setText("")
+        //viewModel.resetState()
     }
     //endregion
 
@@ -175,6 +217,40 @@ class TranslationFragment : Fragment() {
         Navigation
             .findNavController(this.requireView())
             .navigate(destination, extra)
+    }
+    //endregion
+
+    //region View Methods
+    private fun showError(message: String? = "") {
+        //binding.detectedSourceLanguage.setVisible(true)
+
+        Snackbar.make(
+            binding.separator,
+            if (!message.isNullOrEmpty()) message else viewModel.uiState.value.errorMessage,
+            Snackbar.LENGTH_LONG
+        )
+            .setTextColor(Color.WHITE)
+            .setActionTextColor(Color.CYAN)
+            .show()
+    }
+
+    private fun progressBarLoadingStart() {
+        binding.progressBar.setVisible(true)
+    }
+
+    private fun progressBarLoadingStop() {
+        binding.progressBar.setVisible(false)
+    }
+
+    private fun Context.copyToClipboard(text: CharSequence) {
+        val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("label", text)
+        clipboard.setPrimaryClip(clip)
+    }
+
+    private fun Context.pasteTextFromClipboard(editText: EditText) {
+        val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        editText.setText(clipboardManager.primaryClip?.getItemAt(0)?.text)
     }
     //endregion
 }

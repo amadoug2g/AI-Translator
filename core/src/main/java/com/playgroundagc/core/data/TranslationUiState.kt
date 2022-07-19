@@ -16,13 +16,15 @@ data class TranslationUiState(
     val outputText: String = "",
     val errorMessage: String = ""
 ) {
-    fun toQuery(): TranslationQuery {
+    fun toQuery(target: String = this.targetLang.name): TranslationQuery {
         return TranslationQuery(
-            text = this.inputText,
+            text = inputText,
             source_lang = sourceLang.name,
-            target_lang = this.targetLang.name
+            target_lang = target
         )
     }
 
-    fun isInputEmpty(): Boolean = this.inputText.isEmpty()
+    fun isInputEmpty(): Boolean = inputText.isEmpty()
+
+    fun isAutoSelected(): Boolean = sourceLang.name.equals(SourceLang.AUTO)
 }

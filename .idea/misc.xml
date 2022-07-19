@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_change_circle.xml" value="0.163" />
+        <entry key="app/src/main/res/drawable/ic_data_usage.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/layout_bg.xml" value="0.163" />

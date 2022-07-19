@@ -39,7 +39,7 @@ enum class SourceLang(val language: String) {
     }
 
     companion object {
-        private val value = values().associateBy(SourceLang::language)
-        operator fun get(source: String) = value[source]?.name
+        private val value = values().associateBy(SourceLang::name)
+        operator fun get(source: String) = value[source]?.language
     }
 }

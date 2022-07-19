@@ -3,10 +3,7 @@ package com.playgroundagc.deepltranslator.presentation.fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.playgroundagc.core.data.SourceLang
-import com.playgroundagc.core.data.TargetLang
-import com.playgroundagc.core.data.TranslationUiState
-import com.playgroundagc.core.data.UsageResponse
+import com.playgroundagc.core.data.*
 import com.playgroundagc.core.usecase.GetAPIUsageUC
 import com.playgroundagc.core.usecase.TranslateTextUC
 import kotlinx.coroutines.CoroutineScope
@@ -16,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.net.InetAddress
 import java.net.UnknownHostException
 import java.util.concurrent.*
@@ -28,8 +26,8 @@ import java.util.concurrent.*
  */
 
 class FragmentViewModel(
-    private val translateText: TranslateTextUC,
-    private val getAPIUsage: GetAPIUsageUC
+    private val translateTextUC: TranslateTextUC,
+    private val getAPIUsageUC: GetAPIUsageUC
 ) : ViewModel() {
 
     //region Variables
@@ -41,7 +39,10 @@ class FragmentViewModel(
     private val _apiUsage = MutableLiveData<UsageResponse>()
     val apiUsage: LiveData<UsageResponse> = _apiUsage
 
-    val isInputEmpty = _uiState.value.isInputEmpty()
+    private val _detectedLang = MutableLiveData<String>()
+    val detectedLang: LiveData<String> = _detectedLang
+
+    private val isDetectingLang = _uiState.value.isAutoSelected()
     //endregion
 
     //region Setters
@@ -57,8 +58,13 @@ class FragmentViewModel(
         _uiState.update { state -> state.copy(inputText = text) }
     }
 
-    private fun setOutputText(text: String) {
-        _uiState.update { state -> state.copy(outputText = text) }
+    private fun setOutputText(response: TranslationResponse) {
+        if (_uiState.value.sourceLang.name == "AUTO") {
+            val result = "Detected language: ${getLanguage(response.detected_source_language.toString())} \n${response.text}"
+            _uiState.update { state -> state.copy(outputText = result) }
+        } else {
+            _uiState.update { state -> state.copy(outputText = response.text.toString()) }
+        }
     }
 
     private fun setLoadingStatus(status: Boolean) {
@@ -68,33 +74,58 @@ class FragmentViewModel(
     private fun setErrorMessage(message: String = "") {
         _uiState.update { state -> state.copy(errorMessage = message) }
         setLoadingStatus(false)
+        _uiState.update { state -> state.copy(errorMessage = "") }
     }
 
     private fun setUsage(usage: UsageResponse?) {
         _apiUsage.postValue(usage)
+    }
+
+    private fun setDetectedLang(lang: String) {
+        _detectedLang.postValue(lang)
     }
     //endregion
 
     //region Translation
     fun translationProcess() {
         setLoadingStatus(true)
-        if (isOnline()) {
-            coroutineScope.launch {
-                translation()
-            }
+        //if (isOnline()) {
+        if (!_uiState.value.isInputEmpty()) {
+            formatTranslation()
         } else {
-            setErrorMessage("No Internet! Check your network")
+            setErrorMessage("Translation input cannot be empty")
+        }
+        //} else {
+        //    setErrorMessage("No Internet! Check your network")
+        //}
+    }
+
+    private fun formatTranslation() {
+        when (_uiState.value.targetLang.language) {
+            TargetLang.EN_GB.language -> {
+                coroutineScope.launch {
+                    translateText(_uiState.value.toQuery("EN-GB"))
+                }
+            }
+            TargetLang.EN_US.language -> {
+                coroutineScope.launch {
+                    translateText(_uiState.value.toQuery("EN-US"))
+                }
+            }
+            else -> {
+                coroutineScope.launch {
+                    translateText()
+                }
+            }
         }
     }
 
-    suspend fun translation() {
+    private suspend fun translateText(query: TranslationQuery = _uiState.value.toQuery()) {
         try {
-            val query = _uiState.value.toQuery()
-
-            val response = translateText.invoke(query)
+            val response = translateTextUC.invoke(query)
 
             if (response.isSuccessful) {
-                setOutputText(response.body()?.translations?.get(0)?.text.toString())
+                setOutputText(response.body()?.translations?.get(0) ?: TranslationResponse())
                 setErrorMessage()
             } else {
                 handleError(response.code())
@@ -119,7 +150,7 @@ class FragmentViewModel(
 
     private suspend fun getUsage() {
         try {
-            val result = getAPIUsage.invoke()
+            val result = getAPIUsageUC.invoke()
 
             if (result.isSuccessful) {
                 setUsage(result.body())
@@ -189,13 +220,17 @@ class FragmentViewModel(
         return internetAddress != null && !internetAddress.equals("")
     }
 
+    fun isAutoSelected(): Boolean = _uiState.value.isAutoSelected()
+
+    private fun getLanguage(response: String): String = SourceLang[response].toString()
+
     fun resetState() {
         _uiState.update { state ->
             state.copy(
                 isFetchingTranslation = false,
-                isDetectingLanguage = true,
-                sourceLang = SourceLang.AUTO,
-                targetLang = TargetLang.BG,
+                //isDetectingLanguage = true,
+                //sourceLang = SourceLang.AUTO,
+                //targetLang = TargetLang.BG,
                 inputText = "",
                 outputText = "",
                 errorMessage = ""
