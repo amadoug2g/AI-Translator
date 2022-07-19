@@ -7,7 +7,6 @@ import android.view.*
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -149,7 +148,8 @@ class TranslationFragment : Fragment() {
                         binding.targetLangSpinner.targetFlagImg.setImageResource(it)
                     }
 
-                binding.progressBar.visibility = if (state.isFetchingTranslation) View.VISIBLE else View.INVISIBLE
+                binding.progressBar.visibility =
+                    if (state.isFetchingTranslation) View.VISIBLE else View.INVISIBLE
             }
         }
     }
@@ -157,9 +157,7 @@ class TranslationFragment : Fragment() {
 
     //region Translation
     private fun translate() {
-        lifecycleScope.launch {
-            viewModel.translation()
-        }
+        viewModel.translationProcess()
     }
 
     private fun checkSwitchLang() {
@@ -168,7 +166,7 @@ class TranslationFragment : Fragment() {
     }
 
     private fun showApiUsage() {
-        viewModel.getUsage()
+        viewModel.apiUsageProcess()
     }
     //endregion
 

@@ -23,4 +23,6 @@ data class TranslationUiState(
             target_lang = this.targetLang.name
         )
     }
+
+    fun isInputEmpty(): Boolean = this.inputText.isEmpty()
 }
