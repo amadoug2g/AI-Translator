@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.playgroundagc.core.data.*
 import com.playgroundagc.core.usecase.GetAPIUsageUC
 import com.playgroundagc.core.usecase.TranslateTextUC
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ import timber.log.Timber
 import java.net.InetAddress
 import java.net.UnknownHostException
 import java.util.concurrent.*
+import javax.inject.Inject
 
 /**
  * Created by Amadou on 16/07/2022, 01:00
@@ -25,6 +27,7 @@ import java.util.concurrent.*
  *
  */
 
+//@HiltViewModel
 class FragmentViewModel(
     private val translateTextUC: TranslateTextUC,
     private val getAPIUsageUC: GetAPIUsageUC

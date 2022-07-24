@@ -17,7 +17,7 @@ import retrofit2.Response
  *
  */
 
-class RepositoryImpl(
+class RepositoryImpl (
     private val translationApiService: TranslationApiService,
     //private val textLocalDataSource: TextLocalDataSource
 ) : Repository {

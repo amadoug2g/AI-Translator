@@ -2,6 +2,7 @@ package com.playgroundagc.deepltranslator.util
 
 import android.app.Activity
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 /**
@@ -11,6 +12,7 @@ import timber.log.Timber
  *
  */
 
+@HiltAndroidApp
 class GlobalActivity: Application() {
     override fun onCreate() {
         super.onCreate()

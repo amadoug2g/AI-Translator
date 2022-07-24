@@ -10,6 +10,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -209,6 +210,18 @@ class TranslationFragment : Fragment() {
     private fun clearFields() {
         binding.inputLayout.inputEdittext.setText("")
         //viewModel.resetState()
+    }
+
+    private fun setActionBar() {
+        //(activity as AppCompatActivity?)!!.supportActionBar?.setSubtitle(R.string.app_name)
+
+
+        val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
+
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.back_arrow)
+            actionBar.setDisplayHomeAsUpEnabled(true)
+        }
     }
     //endregion
 
