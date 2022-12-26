@@ -2,11 +2,8 @@ package com.playgroundagc.core.repository
 
 import com.playgroundagc.core.data.TranslationList
 import com.playgroundagc.core.data.TranslationQuery
-import com.playgroundagc.core.data.TranslationResponse
 import com.playgroundagc.core.data.UsageResponse
-import com.playgroundagc.core.repository.text.TextLocalDataSource
 import com.playgroundagc.core.repository.translation.TranslationApiService
-import com.playgroundagc.core.util.Constants
 import com.playgroundagc.core.util.Constants.AUTH_KEY
 import retrofit2.Response
 
@@ -17,7 +14,7 @@ import retrofit2.Response
  *
  */
 
-class RepositoryImpl (
+class RepositoryImpl(
     private val translationApiService: TranslationApiService,
     //private val textLocalDataSource: TextLocalDataSource
 ) : Repository {

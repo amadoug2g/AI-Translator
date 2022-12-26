@@ -7,22 +7,15 @@
     <application
         android:name=".util.GlobalActivity"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_deep_l_logo_foreground"
+        android:icon="@mipmap/ic_new_launcher"
         android:label="@string/app_name_2"
-        android:roundIcon="@mipmap/ic_deep_l_logo_foreground"
+        android:roundIcon="@mipmap/ic_new_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.DeepLTranslator">
         <activity
             android:name=".presentation.activity.AppActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".app.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

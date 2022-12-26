@@ -26,7 +26,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.FragmentTranslationBinding
 import com.playgroundagc.deepltranslator.util.selectImageCategory
-import com.playgroundagc.deepltranslator.util.setVisible
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.toast
 import timber.log.Timber
@@ -251,8 +250,6 @@ class TranslationFragment : Fragment() {
 
     private fun showApiUsage() {
         viewModel.apiUsage.observe(requireActivity()) { usage ->
-            val usageLeft = usage.character_limit.minus(usage.character_count)
-
             val usageMessage =
                 "Current character usage:\n${usage.character_count} / ${usage.character_limit}" +
                         "\n\n" +
@@ -304,14 +301,6 @@ class TranslationFragment : Fragment() {
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.CYAN)
             .show()
-    }
-
-    private fun progressBarLoadingStart() {
-        binding.progressBar.setVisible(true)
-    }
-
-    private fun progressBarLoadingStop() {
-        binding.progressBar.setVisible(false)
     }
 
     private fun Context.copyToClipboard(text: CharSequence) {

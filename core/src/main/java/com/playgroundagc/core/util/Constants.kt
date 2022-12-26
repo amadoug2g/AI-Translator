@@ -6,6 +6,7 @@ package com.playgroundagc.core.util
  * Purpose:
  *
  */
+
 object Constants {
     const val BASE_URL = "https://api-free.deepl.com/"
     const val AUTH_KEY = Authentication.KEY
