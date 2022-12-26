@@ -26,5 +26,5 @@ data class TranslationUiState(
 
     fun isInputEmpty(): Boolean = inputText.isEmpty()
 
-    fun isAutoSelected(): Boolean = sourceLang.name.equals(SourceLang.AUTO)
+    fun isAutoSelected(): Boolean = sourceLang.language == "Any language"
 }

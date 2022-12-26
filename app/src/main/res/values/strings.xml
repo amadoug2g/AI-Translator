@@ -43,4 +43,12 @@
     <string name="input_edittext_hint">Enter a translation</string>
     <string name="source_language_flag">Source language flag</string>
     <string name="target_language_flag">Target language flag</string>
+    <string name="back_button">back button</string>
+    <string name="language_select_title">Language select</string>
+    <string name="all_languages_title">All languages</string>
+    <string name="recent_languages_title">Recent languages</string>
+    <string name="language_translation_title">Translation</string>
+    <string name="api_usage">API Usage</string>
+    <string name="main_page_title">AI Translator</string>
+    <string name="no_language_found">No corresponding language found</string>
 </resources>

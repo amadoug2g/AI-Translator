@@ -1,11 +1,12 @@
 package com.playgroundagc.deepltranslator.presentation.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.playgroundagc.deepltranslator.databinding.SimpleLayoutFileBinding
-// import com.playgroundagc.deepltranslator.domain.SourceLang
 import com.playgroundagc.core.data.SourceLang
+import com.playgroundagc.core.data.TranslationUiState
+import com.playgroundagc.deepltranslator.databinding.SimpleLayoutFileBinding
 import com.playgroundagc.deepltranslator.util.selectImageCategory
 import timber.log.Timber
 
@@ -17,8 +18,9 @@ import timber.log.Timber
  */
 
 class SourceSelectAdapter(
-    private val sourceLangList: Array<SourceLang>,
-    val action: LanguageSelect
+    private var sourceLangList: MutableList<SourceLang>,
+    val action: LanguageSelect,
+    val uiState: TranslationUiState,
 ) :
     RecyclerView.Adapter<SourceSelectAdapter.SourceViewHolder>() {
 
@@ -31,21 +33,40 @@ class SourceSelectAdapter(
 
     override fun onBindViewHolder(holder: SourceViewHolder, position: Int) {
         val currentItem = sourceLangList[position]
-        holder.bind(currentItem)
+        if (uiState.sourceLang.language == "Any language" && currentItem.name == uiState.targetLang.name) {
+            holder.bind(currentItem, true)
+            holder.itemView.layoutParams.height = 0
+        } else {
+            holder.bind(currentItem)
+        }
     }
 
     override fun getItemCount(): Int = sourceLangList.size
 
+    fun filterList(filteredList: MutableList<SourceLang>) {
+        if ( filteredList.isNullOrEmpty()) {
+
+        } else {
+        sourceLangList = filteredList
+        }
+        notifyDataSetChanged()
+    }
+
     inner class SourceViewHolder(val binding: SimpleLayoutFileBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(sourceLang: SourceLang) {
-            with(binding) {
-                apply {
-                    languageFlag.setImageResource(sourceLang.selectImageCategory())
-                    languageName.text = sourceLang.language
-                    languageCardView.setOnClickListener {
-                        action.onClick(sourceLang)
-                        Timber.d("Lang is: ${sourceLang.language}")
+        fun bind(sourceLang: SourceLang, hide: Boolean = false) {
+
+            if (hide) {
+                binding.root.visibility = View.GONE
+            } else {
+                with(binding) {
+                    apply {
+                        languageFlag.setImageResource(sourceLang.selectImageCategory())
+                        languageName.text = sourceLang.language
+                        languageCardView.setOnClickListener {
+                            action.onClick(sourceLang)
+                            Timber.d("Lang is: ${sourceLang.language}")
+                        }
                     }
                 }
             }

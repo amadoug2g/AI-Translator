@@ -4,6 +4,6 @@
     <item
         android:id="@+id/api_usage"
         android:icon="@drawable/ic_data_usage"
-        android:title="API Usage"
+        android:title="@string/api_usage"
         app:showAsAction="ifRoom" />
 </menu>

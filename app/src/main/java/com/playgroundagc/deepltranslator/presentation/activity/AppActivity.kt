@@ -23,10 +23,9 @@ import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.ActivityAppBinding
 import com.playgroundagc.deepltranslator.presentation.fragment.FragmentViewModel
 import com.playgroundagc.deepltranslator.presentation.fragment.FragmentViewModelFactory
-import dagger.hilt.android.AndroidEntryPoint
 
 //@AndroidEntryPoint
-class AppActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
+class AppActivity : AppCompatActivity() {
 
     companion object {
         private lateinit var binding: ActivityAppBinding
@@ -35,25 +34,40 @@ class AppActivity : AppCompatActivity(), NavController.OnDestinationChangedListe
     }
 
     //private val viewModel: FragmentViewModel by viewModels()
+    val viewModel2: FragmentViewModel by viewModels {
+        val translationApi = TranslationApi
+        val translationDataSource = TranslationRemoteDataSourceImpl(translationApi)
+        val repository = RepositoryImpl(translationDataSource)
+        val translateText = TranslateTextUC(repository)
+        val getAPIUsage = GetAPIUsageUC(repository)
+
+        FragmentViewModelFactory(translateText, getAPIUsage)
+    }
 
     lateinit var navController: NavController
 
     //region Override Methods
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
-
-        val translationApi = TranslationApi
-        val translationRemoteDSI = TranslationRemoteDataSourceImpl(translationApi)
-        //val textLocalDSI = TextService()
-        val repository = RepositoryImpl(translationRemoteDSI)
-        val translateTextUC = TranslateTextUC(repository)
-        val getAPIUsageUC = GetAPIUsageUC(repository)
-        //viewModel = ViewModelProvider(this, FragmentViewModelFactory(translateTextUC, getAPIUsageUC))[FragmentViewModel::class.java]
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_app)
 
+        setupViewModel()
+
         setupNavigation()
+    }
+
+    private fun setupViewModel() {
+        val translationApi = TranslationApi
+        val translationDataSource = TranslationRemoteDataSourceImpl(translationApi)
+        val repository = RepositoryImpl(translationDataSource)
+        val translateText = TranslateTextUC(repository)
+        val getAPIUsage = GetAPIUsageUC(repository)
+
+        val factory = FragmentViewModelFactory(translateText, getAPIUsage)
+
+        viewModel = ViewModelProvider(this,factory)[FragmentViewModel::class.java]
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -82,23 +96,8 @@ class AppActivity : AppCompatActivity(), NavController.OnDestinationChangedListe
             supportFragmentManager.findFragmentById(R.id.fragmentApp) as NavHostFragment
         navController = navHostFragment.navController
 
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-    }
-
-    override fun onDestinationChanged(
-        controller: NavController,
-        destination: NavDestination,
-        arguments: Bundle?
-    ) {
-        when (destination.id) {
-            R.id.languageSelectFragment -> {
-                //arrowVisibility(false)
-            }
-            else -> {
-                //arrowVisibility(true)
-            }
-        }
+        //appBarConfiguration = AppBarConfiguration(navController.graph)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     private fun arrowVisibility(value: Boolean = true) {

@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="app_theme">#0c344c</color>
+    <color name="light_app_theme">#0f0c344c</color>
     <color name="off_theme">#808080</color>
     <color name="alert_red">#FF0000</color>
 </resources>

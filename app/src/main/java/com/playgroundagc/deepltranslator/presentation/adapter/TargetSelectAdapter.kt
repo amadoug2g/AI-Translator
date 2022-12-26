@@ -3,8 +3,10 @@ package com.playgroundagc.deepltranslator.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.playgroundagc.core.data.SourceLang
 import com.playgroundagc.deepltranslator.databinding.SimpleLayoutFileBinding
 import com.playgroundagc.core.data.TargetLang
+import com.playgroundagc.core.data.TranslationUiState
 import com.playgroundagc.deepltranslator.util.selectImageCategory
 import timber.log.Timber
 
@@ -16,8 +18,8 @@ import timber.log.Timber
  */
 
 class TargetSelectAdapter(
-    private val targetLangList: Array<TargetLang>,
-    val action: LanguageSelect
+    private var targetLangList: MutableList<TargetLang>,
+    val action: LanguageSelect,
 ) : RecyclerView.Adapter<TargetSelectAdapter.TargetViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TargetViewHolder {
@@ -33,6 +35,11 @@ class TargetSelectAdapter(
     }
 
     override fun getItemCount(): Int = targetLangList.size
+
+    fun filterList(filteredList: MutableList<TargetLang>) {
+        targetLangList = filteredList
+        notifyDataSetChanged()
+    }
 
     inner class TargetViewHolder(val binding: SimpleLayoutFileBinding) :
         RecyclerView.ViewHolder(binding.root) {

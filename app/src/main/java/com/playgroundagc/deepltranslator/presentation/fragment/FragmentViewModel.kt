@@ -1,12 +1,12 @@
 package com.playgroundagc.deepltranslator.presentation.fragment
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.playgroundagc.core.data.*
 import com.playgroundagc.core.usecase.GetAPIUsageUC
 import com.playgroundagc.core.usecase.TranslateTextUC
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +18,6 @@ import timber.log.Timber
 import java.net.InetAddress
 import java.net.UnknownHostException
 import java.util.concurrent.*
-import javax.inject.Inject
 
 /**
  * Created by Amadou on 16/07/2022, 01:00
@@ -44,17 +43,35 @@ class FragmentViewModel(
 
     private val _detectedLang = MutableLiveData<String>()
     val detectedLang: LiveData<String> = _detectedLang
-
-    private val isDetectingLang = _uiState.value.isAutoSelected()
     //endregion
 
     //region Setters
-    fun setSourceLanguage(source: SourceLang) {
-        _uiState.update { state -> state.copy(sourceLang = source) }
+    init {
+        apiUsageProcess()
     }
 
-    fun setTargetLanguage(target: TargetLang) {
-        _uiState.update { state -> state.copy(targetLang = target) }
+    fun setSourceLanguage(source: SourceLang, fromFunction: Boolean = true) {
+        if (source.language == (_uiState.value.targetLang.language) && fromFunction) {
+            switchLanguages()
+        } else {
+            _uiState.update { state -> state.copy(sourceLang = source) }
+        }
+    }
+
+    fun setTargetLanguage(target: TargetLang, fromFunction: Boolean = true) {
+        if (target.language == (_uiState.value.sourceLang.language) && fromFunction) {
+            switchLanguages()
+        } else {
+            _uiState.update { state -> state.copy(targetLang = target) }
+        }
+    }
+
+    fun switchLanguages() {
+        val source = SourceLang.valueOf(_uiState.value.targetLang.name)
+        val target = TargetLang.valueOf(_uiState.value.sourceLang.name)
+
+        setTargetLanguage(target, false)
+        setSourceLanguage(source, false)
     }
 
     fun setInputText(text: String) {
@@ -63,7 +80,8 @@ class FragmentViewModel(
 
     private fun setOutputText(response: TranslationResponse) {
         if (_uiState.value.sourceLang.name == "AUTO") {
-            val result = "Detected language: ${getLanguage(response.detected_source_language.toString())} \n${response.text}"
+            val result =
+                "Detected language: ${getLanguage(response.detected_source_language.toString())} \n${response.text}"
             _uiState.update { state -> state.copy(outputText = result) }
         } else {
             _uiState.update { state -> state.copy(outputText = response.text.toString()) }
@@ -82,6 +100,7 @@ class FragmentViewModel(
 
     private fun setUsage(usage: UsageResponse?) {
         _apiUsage.postValue(usage)
+        Log.d("Usage", "$usage")
     }
 
     private fun setDetectedLang(lang: String) {
@@ -140,8 +159,8 @@ class FragmentViewModel(
     //endregion
 
     //region API Usage
-    fun apiUsageProcess() {
-        setLoadingStatus(true)
+    private fun apiUsageProcess() {
+        //setLoadingStatus(true)
         if (isOnline()) {
             coroutineScope.launch {
                 getUsage()

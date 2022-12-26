@@ -21,6 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.playgroundagc.deepltranslator.R
 import com.playgroundagc.deepltranslator.databinding.FragmentTranslationBinding
@@ -28,6 +29,7 @@ import com.playgroundagc.deepltranslator.util.selectImageCategory
 import com.playgroundagc.deepltranslator.util.setVisible
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.toast
+import timber.log.Timber
 
 
 class TranslationFragment : Fragment() {
@@ -51,10 +53,18 @@ class TranslationFragment : Fragment() {
         binding.viewModel = viewModel
 
         setupViews()
-        setupObservers()
+        //setupObservers()
         setupListeners()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupObservers()
+
+        Timber.d("Language source: ${viewModel.uiState.value.sourceLang.language}")
+        Timber.d("Language target: ${viewModel.uiState.value.targetLang.language}")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,7 +78,7 @@ class TranslationFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.api_usage -> {
-                        showApiUsage()
+                        //showApiUsage()
                         true
                     }
                     else -> false
@@ -100,10 +110,19 @@ class TranslationFragment : Fragment() {
                 sourceFlagImg.background = null
             }
 
+            apiUsage.apply {
+                background = null
+
+                setOnClickListener {
+                    showApiUsage()
+                }
+            }
+
             changeBtn.apply {
                 background = null
                 setOnClickListener {
-                    checkSwitchLang()
+                    //checkSwitchLang()
+                    switchLanguages()
                 }
             }
 
@@ -191,9 +210,36 @@ class TranslationFragment : Fragment() {
     }
 
     private fun checkSwitchLang() {
-        //TODO("Implement language switching")
-        toast("To be implemented!")
+        if (viewModel.isAutoSelected()) {
+            toast("Not with auto detect!")
+        } else {
+            toast("To be implemented!")
+        }
     }
+
+    private fun switchLanguages() {
+
+        Timber.d("Language switch source: ${viewModel.uiState.value.sourceLang.language}")
+        Timber.d("Language switch target: ${viewModel.uiState.value.targetLang.language}")
+
+        viewModel.switchLanguages()
+    }
+
+    /**
+     * Switch Language Visibility
+     * */
+    /*
+    private fun displayTranslation(translation: String?) {
+        binding.textTranslated.text = translation
+    }
+
+    private fun getDetectedLanguage(response: Response) {
+        val detectedLang = response.detected_source_language?.let { SourceLang.valueOf(it) }
+        val lang = (detectedLang ?: "${response.detected_source_language}").toString()
+//        binding.detectedSourceLanguage.text = "Detected language: $lang"
+        if (lang != "null") binding.detectedLang = lang
+    }
+    */
 
     private fun copyTranslation(text: String) {
         requireContext().copyToClipboard(text)
@@ -204,7 +250,20 @@ class TranslationFragment : Fragment() {
     }
 
     private fun showApiUsage() {
-        viewModel.apiUsageProcess()
+        viewModel.apiUsage.observe(requireActivity()) { usage ->
+            val usageLeft = usage.character_limit.minus(usage.character_count)
+
+            val usageMessage =
+                "Current character usage:\n${usage.character_count} / ${usage.character_limit}" +
+                        "\n\n" +
+                        "${usage.usagePercent()}% used"
+
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("API Usage")
+                .setMessage(usageMessage)
+                .setPositiveButton("OK") { _, _ -> }
+                .show()
+        }
     }
 
     private fun clearFields() {
