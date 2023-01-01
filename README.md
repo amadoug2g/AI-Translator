@@ -22,8 +22,8 @@ Using a Virtual or Physical device
 
 ## What's next
 - [x] Display loading before/during translation
-- [ ] Track API data usage
+- [x] Track API data usage
 - [x] Save last used languages (source & target)
 - [ ] Store translation history with Android Room
-- [ ] Option to switch languages
+- [x] Option to switch languages
 - [ ] Add formality spinner selection
