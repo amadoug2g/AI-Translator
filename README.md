@@ -1,7 +1,7 @@
 # AI Translator
 Translation Application using Kotlin &amp; the [DeepL API](https://www.deepl.com/docs-api/introduction/)
 
-![Application Screenshots](https://user-images.githubusercontent.com/44437106/128611258-a16d8c01-4482-4f19-98f1-6da132361d85.png)
+![AI Translator](https://github.com/amadoug2g/AI-Translator/assets/44437106/71537e7f-a653-420d-829b-bb4f8c773630)
 
 ## Introduction
 A mobile translator application project.
@@ -22,7 +22,7 @@ Using a Virtual or Physical device
 
 ## What's next
 - [x] Display loading before/during translation
-- [ ] Track API data usage
+- [x] Track API data usage
 - [x] Save last used languages (source & target)
 - [x] Option to switch languages
 - [ ] Add formality spinner selection
